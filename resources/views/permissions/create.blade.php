@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class='col-lg-8'>
+    <div class='col-lg-7 col-lg-offset-1'>
 
         <h1><i class='fa fa-key'></i> Add Permission</h1>
         <br>

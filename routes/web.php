@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('admin', function () { return view('dashboard'); })->middleware('isAdmin');
+
 Route::resource('admin/users', 'UsersController');
 
 Route::resource('admin/roles', 'RolesController');

@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="col-lg-8">
+    <div class="col-lg-7 col-lg-offset-1">
         <h1><i class="fa fa-key"></i>Available Permissions
 
             <a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ $permission->name }}</td>
                         <td>
-                            <a href="{{ URL::to('permissions/'.$permission->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+                            <a href="{{ URL::to('admin/permissions/'.$permission->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
 
                             {!! Form::open(['method' => 'DELETE', 'route' => ['permissions.destroy', $permission->id] ]) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
@@ -37,7 +37,7 @@
             </table>
         </div>
 
-        <a href="{{ URL::to('permissions/create') }}" class="btn btn-success">Add Permission</a>
+        <a href="{{ URL::to('admin/permissions/create') }}" class="btn btn-success">Add Permission</a>
 
     </div>
 
