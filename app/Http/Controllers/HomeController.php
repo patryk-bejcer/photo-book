@@ -22,9 +22,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    	$images = Images::orderBy('created_at', 'desc')->paginate(30);
+    	$images = Images::orderBy('created_at', 'desc')->paginate(5);
+
+	    if ($request->ajax()) {
+		    $view = view('data',compact('images'))->render();
+		    return response()->json(['html'=>$view]);
+	    }
 
         return view('home', compact('images'));
     }
