@@ -25,7 +25,7 @@ class RolesController extends Controller {
 	public function index() {
 		$roles = Role::all();//Get all roles
 
-		return view('roles.index')->with('roles', $roles);
+		return view('admin.roles.index')->with('roles', $roles);
 	}
 
 	/**
@@ -36,7 +36,7 @@ class RolesController extends Controller {
 	public function create() {
 		$permissions = Permission::all();//Get all permissions
 
-		return view('roles.create', ['permissions'=>$permissions]);
+		return view('admin.roles.create', ['permissions'=>$permissions]);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class RolesController extends Controller {
 			$role->givePermissionTo($p);
 		}
 
-		return redirect()->route('roles.index')
+		return redirect()->route('admin.roles.index')
 		                 ->with('flash_message',
 			                 'Role'. $role->name.' added!');
 	}
@@ -93,7 +93,7 @@ class RolesController extends Controller {
 		$role = Role::findOrFail($id);
 		$permissions = Permission::all();
 
-		return view('roles.edit', compact('role', 'permissions'));
+		return view('admin.roles.edit', compact('role', 'permissions'));
 	}
 
 	/**
@@ -131,7 +131,7 @@ class RolesController extends Controller {
 			$role->givePermissionTo($p);  //Assign permission to role
 		}
 
-		return redirect()->route('roles.index')
+		return redirect()->route('admin.roles.index')
 		                 ->with('flash_message',
 			                 'Role'. $role->name.' updated!');
 	}
@@ -147,7 +147,7 @@ class RolesController extends Controller {
 		$role = Role::findOrFail($id);
 		$role->delete();
 
-		return redirect()->route('roles.index')
+		return redirect()->route('admin.roles.index')
 		                 ->with('flash_message',
 			                 'Role deleted!');
 

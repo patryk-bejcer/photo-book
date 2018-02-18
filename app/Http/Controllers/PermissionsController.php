@@ -26,7 +26,7 @@ class PermissionsController extends Controller {
 	public function index() {
 		$permissions = Permission::all(); //Get all permissions
 
-		return view('permissions.index')->with('permissions', $permissions);
+		return view('admin.permissions.index')->with('permissions', $permissions);
 	}
 
 	/**
@@ -37,7 +37,7 @@ class PermissionsController extends Controller {
 	public function create() {
 		$roles = Role::get(); //Get all roles
 
-		return view('permissions.create')->with('roles', $roles);
+		return view('admin.permissions.create')->with('roles', $roles);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class PermissionsController extends Controller {
 			}
 		}
 
-		return redirect()->route('permissions.index')
+		return redirect()->route('admin.permissions.index')
 		                 ->with('flash_message',
 			                 'Permission'. $permission->name.' added!');
 
@@ -93,7 +93,7 @@ class PermissionsController extends Controller {
 	public function edit($id) {
 		$permission = Permission::findOrFail($id);
 
-		return view('permissions.edit', compact('permission'));
+		return view('admin.permissions.edit', compact('permission'));
 	}
 
 	/**
@@ -111,7 +111,7 @@ class PermissionsController extends Controller {
 		$input = $request->all();
 		$permission->fill($input)->save();
 
-		return redirect()->route('permissions.index')
+		return redirect()->route('admin.permissions.index')
 		                 ->with('flash_message',
 			                 'Permission'. $permission->name.' updated!');
 
@@ -128,14 +128,14 @@ class PermissionsController extends Controller {
 
 		//Make it impossible to delete this specific permission
 		if ($permission->name == "Administer roles & permissions") {
-			return redirect()->route('permissions.index')
+			return redirect()->route('admin.permissions.index')
 			                 ->with('flash_message',
 				                 'Cannot delete this Permission!');
 		}
 
 		$permission->delete();
 
-		return redirect()->route('permissions.index')
+		return redirect()->route('admin.permissions.index')
 		                 ->with('flash_message',
 			                 'Permission deleted!');
 

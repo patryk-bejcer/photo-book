@@ -11,19 +11,34 @@
 |
 */
 
+use Intervention\Image\Facades\Image;
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
+/* Admin routes */
 Route::get('admin', function () { return view('dashboard'); })->middleware('isAdmin');
-
-Route::resource('admin/users', 'UsersController');
-
+Route::resource('admin/users', 'UsersBackendController');
 Route::resource('admin/roles', 'RolesController');
-
 Route::resource('admin/permissions', 'PermissionsController');
 
+/* User routes */
+Route::resource('users','UsersController');
+Route::resource('images','ImagesController');
+
+Route::get('users/{user}/images/upload','ImagesController@create');
+
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('images','ImagesController');
+Route::get('/test', function()
+{
+	$imgPath = asset('img/foo.jpg');
+
+	$img = Image::make($imgPath)->resize(300, 200);
+
+	return $img->response('jpg');
+});
 
