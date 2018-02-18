@@ -2,22 +2,31 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card card-default">
-                <div class="card-header">Lista wszystkich zdjęc</div>
+    <div class="row justify-content-center mb-4">
+    @foreach($images as $image)
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+                <div class="col-md-4 mb-4">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{{url('users/' . $image->user_id )}}">{{ $image->user->name }}</a>
                         </div>
-                    @endif
 
-                    You are logged in!
+                        <div class="card-body">
+                                <div class="single-img mb-4">
+                                    <img class="img-fluid" src="{{url('storage/users') . '/' . $image->user_id . '/images/' . $image->path }}" alt="">
+                                </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </div>
+
+    @endforeach
+
+
+    </div>
+
+    <div class="row justify-content-center">
+    {{ $images->links() }}
     </div>
 </div>
 @endsection

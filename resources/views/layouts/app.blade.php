@@ -19,6 +19,8 @@
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
     <!-- Your custom styles (optional) -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Dropzone styles-->
+    <link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -68,7 +70,7 @@
 
         <main class="py-4">
             <div class="container">
-                <div class="col-md-8 offset-2">
+                <div class="col-md-10 offset-1">
                     @yield('content')
                 </div>
             </div>
@@ -84,5 +86,7 @@
     <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    <!-- Dropzone (Drag and drop file upload) -->
+    <script type="text/javascript" src="{{ asset('js/dropzone.js') }}"></script>
 </body>
 </html>

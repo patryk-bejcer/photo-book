@@ -13,9 +13,7 @@
 
 use Intervention\Image\Facades\Image;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
@@ -30,6 +28,7 @@ Route::resource('users','UsersController');
 Route::resource('images','ImagesController');
 
 Route::get('users/{user}/images/upload','ImagesController@create');
+Route::post('users/{user}/images/upload','ImagesController@store');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('images','ImagesController');

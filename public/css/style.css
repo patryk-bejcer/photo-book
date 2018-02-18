@@ -1,1 +1,14 @@
 /* Your custom styles */
+
+.upload-input{
+    padding:10px;
+}
+
+.dz-image-preview{
+    max-width: 150px;
+    float: left;
+}
+
+.no-padding{
+    padding:0px;
+}

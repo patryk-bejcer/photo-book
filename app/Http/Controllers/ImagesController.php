@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Images;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class ImagesController extends Controller
 {
@@ -23,7 +27,8 @@ class ImagesController extends Controller
      */
     public function create($id)
     {
-        return view('images.create');
+    	$user = User::findOrFail($id);
+        return view('images.create', compact('user'));
     }
 
     /**
@@ -32,9 +37,28 @@ class ImagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+	    $upload_path = 'storage/users/' . $id .'/images/';
+
+	    if($request->file('images')) {
+
+		    foreach ($request->images as $image) {
+
+			    $upload_path = 'public/users/' . $id . '/images/';
+			    $image->store($upload_path);
+			    $filename = $image->hashName();
+
+
+			    Images::create([
+			    	'user_id' => Auth::id(),
+				    'path' => $filename,
+				    'visible_level' => 'publish',
+				    'permission' => 'all',
+			    ]);
+
+		    }
+	    }
     }
 
     /**
