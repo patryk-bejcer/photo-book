@@ -56,7 +56,7 @@ class ImagesController extends Controller
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
-                $image->fit(320,320);
+                $image->fit(360,360);
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name));
 

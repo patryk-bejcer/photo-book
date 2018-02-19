@@ -33,8 +33,10 @@ Route::get('users/{user}/albums','UsersController@userAlbums')->name('user-album
 Route::get('users/{user}/images/upload','ImagesController@create');
 Route::post('users/{user}/images/upload','ImagesController@store');
 
+Route::get('users/{user}/albums/{album}/','AlbumsController@show')->where('album', '[0-9]+');;
 Route::get('users/{user}/albums/create','AlbumsController@create');
 Route::post('users/{user}/albums/create','AlbumsController@store');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('images','ImagesController');

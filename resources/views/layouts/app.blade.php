@@ -11,19 +11,27 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <!-- Dropzone styles-->
     <link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
+    <!-- LightBox -->
+    <link href="{{ asset('css/lightgallery.css') }}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 </head>
 <body>
     <div id="app">
+
+
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
 
             <div class="container">
@@ -45,6 +53,8 @@
                     <ul class="navbar-nav ml-auto">
 
                         <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+
+
 
                         <!-- Authentication Links -->
                         @guest
@@ -89,7 +99,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
     <!-- JQuery -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap tooltips -->
@@ -99,8 +109,11 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
     <!-- Dropzone (Drag and drop file upload) -->
-    <script type="text/javascript" src="{{ asset('js/dropzone.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/dropzone.js') }}"></script>--}}
     <!-- FontAwesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <!-- LightGallery -->
+    <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/lightgallery/lightgallery.js') }}"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
 
         @foreach($user->albums as $album)
             <div class="col-md-3 no-padding" style="padding:2px;">
-                <a href="">
+                <a href="{{ url('/users/' . $user->id . '/albums/' . $album->id) }}">
                     <img title="{{$album->title}}" class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/' . $album->primary_image }}" alt="">
                 </a>
             </div>

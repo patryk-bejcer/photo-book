@@ -21,3 +21,122 @@
     color: #1d1e1f;
     background-color: #222;
 }
+
+#gallery img{
+    width: 100%;
+}
+
+#gallery li{
+    padding:3px;
+}
+
+.modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto;
+    margin-right: 0 !important;
+    margin-top: 0;
+    width: 25%;
+    height: 96%;
+}
+
+.modal-dialog h5{
+    margin-top:5px;
+}
+
+.lg-backdrop{
+    width: 75%;
+}
+
+
+
+.lg-outer .lg-inner {
+    width: 75%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+}
+
+.modal-dialog .modal-content {
+    border-radius: 2px;
+    border: 0;
+    height: 100%;
+}
+
+.lg-toolbar {
+    z-index: 1082;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.lg-toolbar .lg-icon {
+    color: #DDD !important;
+    cursor: pointer;
+    float: right;
+    font-size: 24px;
+    height: 47px;
+    line-height: 27px;
+    padding: 10px 0;
+    text-align: center;
+    width: 50px;
+    text-decoration: none !important;
+    outline: medium none;
+    -webkit-transition: color 0.2s linear;
+    -o-transition: color 0.2s linear;
+    transition: color 0.2s linear;
+}
+
+.lg-outer .lg-inner {
+    width: 75% !important;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+}
+
+.lg-outer .lg {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 48% !important;
+    max-height: 100%;
+}
+
+.lg-outer{
+    width: 75% !important;
+}
+
+.lg-outer .lg-inner {
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+}
+
+.lg-outer .lg {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 97% !important;
+    max-height: 100%;
+}
+
+.modal-dialog .modal-content {
+    border-radius: 2px;
+    border: 0;
+    height: inherit !important;
+    border-radius: 0 !important;
+}

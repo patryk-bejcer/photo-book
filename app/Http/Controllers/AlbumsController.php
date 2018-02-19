@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Album;
+use App\AlbumsImage;
+use App\Images;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,17 +56,38 @@ class AlbumsController extends Controller
             $thumbnail_image_name = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
             $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
-            $this->storeToDB($thumbnail_image_name, $request);
+            $insertAlbum = $this->storePrimaryToDB($thumbnail_image_name, $request);
 
         }
+
+	    if($request->file('images')) {
+
+		    foreach ( $request->images as $imagee ) {
+
+			    $image = Image::make( $imagee )->encode( 'jpg', 85 );
+
+			    $thumbnail_image_name = pathinfo( $imagee->hashName(), PATHINFO_FILENAME ) . '.' . $imagee->getClientOriginalExtension();
+			    $image->save( public_path( 'storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name ) );
+
+			    $image->fit( 360, 360 );
+			    $thumbnail_image_name = pathinfo( $imagee->hashName(), PATHINFO_FILENAME ) . '.' . $imagee->getClientOriginalExtension();
+			    $image->save( public_path( 'storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name ) );
+
+
+			    $insertImage = $this->storeImageToDB( $thumbnail_image_name );
+
+				$this->storeAlbumImageToDB($insertAlbum, $insertImage);
+
+		    }
+	    }
 
         Session::flash('message', "Dodano nowy album.");
         return redirect()->route('user-albums', ['id' => Auth::id()]);
 
     }
 
-    public function storeToDB($filename, Request $request){
-        Album::create([
+    public function storePrimaryToDB($filename, Request $request){
+        $album = Album::create([
             'user_id' => Auth::id(),
             'title' => $request->name,
             'alt' => '',
@@ -73,7 +96,27 @@ class AlbumsController extends Controller
             'visible_level' => 'publish',
             'permission' => 'all',
         ]);
+
+        return $album;
     }
+
+	public function storeImageToDB($filename){
+		$image = Images::create([
+			'user_id' => Auth::id(),
+			'path' =>  $filename,
+			'visible_level' => 'publish',
+			'permission' => 'all',
+		]);
+
+		return $image;
+	}
+
+	public function storeAlbumImageToDB($insertAlbum, $insertImg){
+		AlbumsImage::create([
+			'album_id' => $insertAlbum->id,
+			'image_id' => $insertImg->id
+		]);
+	}
 
     /**
      * Display the specified resource.
@@ -81,9 +124,12 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user, $album)
     {
-        //
+    	$user = User::findOrFail($user);
+    	$album = Album::findOrFail($album);
+
+        return view('albums.single', compact('album', 'user'));
     }
 
     /**

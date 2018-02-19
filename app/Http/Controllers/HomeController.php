@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-    	$images = Images::orderBy('created_at', 'desc')->paginate(32);
+    	$images = Images::orderBy('created_at', 'desc')->paginate(16);
 
 	    if ($request->ajax()) {
 		    $view = view('data',compact('images'))->render();

@@ -12,4 +12,8 @@ class Images extends Model
 	   return $this->hasOne('App\User', 'id', 'user_id');
    }
 
+   public function albums(){
+	   return $this->belongsToMany('App\Album');
+   }
+
 }
