@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class AlbumsController extends Controller
 {
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +13,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        echo 'test';
+        //
     }
 
     /**
@@ -49,18 +45,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('users.single', compact('user'));
-    }
-
-    public function userImages($id){
-        $user = User::findOrFail($id);
-        return view('users.images', compact('user'));
-    }
-
-    public function userAlbums($id){
-        $user = User::findOrFail($id);
-        return view('users.albums', compact('user'));
+        //
     }
 
     /**

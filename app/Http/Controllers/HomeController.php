@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-    	$images = Images::orderBy('created_at', 'desc')->paginate(5);
+    	$images = Images::orderBy('created_at', 'desc')->paginate(32);
 
 	    if ($request->ajax()) {
 		    $view = view('data',compact('images'))->render();

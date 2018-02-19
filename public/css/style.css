@@ -12,3 +12,12 @@
 .no-padding{
     padding:0px;
 }
+
+.navbar-brand img{
+    max-width:180px;
+}
+
+.dropdown .dropdown-menu .dropdown-item:hover {
+    color: #1d1e1f;
+    background-color: #222;
+}

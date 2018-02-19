@@ -30,7 +30,11 @@ class User extends Authenticatable
     ];
 
     public function images(){
-	    return $this->hasMany('App\Images', 'user_id', 'id');
+	    return $this->hasMany('App\Images', 'user_id', 'id')->orderBy('created_at', 'desc');
+    }
+
+    public function lastImages(){
+        return $this->hasMany('App\Images', 'user_id', 'id')->orderBy('created_at', 'desc')->limit(5);
     }
 
 }

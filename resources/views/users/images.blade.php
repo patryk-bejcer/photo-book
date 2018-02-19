@@ -4,9 +4,7 @@
 
     @include('users.includes.user')
 
-    <a href="{{url('/users/' . $user->id . '/albums' )}}"><h4>Albumy</h4></a>
-    <hr>
-    <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Zdjęcia</h4></a>
+    <h4 class="mt-3"><i class="fas fa-image"></i> Zdjęcia użytkownika <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h4>
     <hr>
 
     <div class="row" style="padding: 0 15px;">

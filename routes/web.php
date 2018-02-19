@@ -27,6 +27,9 @@ Route::resource('admin/permissions', 'PermissionsController');
 Route::resource('users','UsersController');
 Route::resource('images','ImagesController');
 
+Route::get('users/{user}/images','UsersController@userImages');
+Route::get('users/{user}/albums','UsersController@userAlbums');
+
 Route::get('users/{user}/images/upload','ImagesController@create');
 Route::post('users/{user}/images/upload','ImagesController@store');
 

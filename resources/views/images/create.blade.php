@@ -3,6 +3,10 @@
 @section('content')
     <h4>Dodawanie nowych zdjęć</h4>
 
+    @if (Session::has('message'))
+        <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
+
     <form action="{{url('/users/' . $user->id . '/images/upload')}}" method="POST" enctype="multipart/form-data">
 
         {{ csrf_field() }}

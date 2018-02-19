@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card card-default">
-                <div class="card-header">Register</div>
+                <div class="card-header">Rejestracja</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -14,7 +14,7 @@
                         <div class="form-group row">
                             {{--<label for="name" class="col-md-4 col-form-label text-md-right">Name</label>--}}
 
-                            <div class="col-md-12">
+                            <div class="col-md-8 offset-md-2">
                                 <input placeholder="Imię i nazwisko" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
@@ -28,7 +28,7 @@
                         <div class="form-group row">
                             {{--<label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>--}}
 
-                            <div class="col-md-12">
+                            <div class="col-md-8 offset-md-2">
                                 <input placeholder="Adres E-Mail" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             {{--<label for="password" class="col-md-4 col-form-label text-md-right">Password</label>--}}
 
-                            <div class="col-md-12">
+                            <div class="col-md-8 offset-md-2">
                                 <input placeholder="Hasło" id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
@@ -56,13 +56,13 @@
                         <div class="form-group row">
                             {{--<label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>--}}
 
-                            <div class="col-md-12">
+                            <div class="col-md-8 offset-md-2">
                                 <input placeholder="Powtórz hasło" id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-12 offset-md-4">
+                            <div class="col-md-8 offset-md-2 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     Zarejestruj się
                                 </button>
