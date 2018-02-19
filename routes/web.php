@@ -27,11 +27,14 @@ Route::resource('admin/permissions', 'PermissionsController');
 Route::resource('users','UsersController');
 Route::resource('images','ImagesController');
 
-Route::get('users/{user}/images','UsersController@userImages');
-Route::get('users/{user}/albums','UsersController@userAlbums');
+Route::get('users/{user}/images','UsersController@userImages')->name('user-images');
+Route::get('users/{user}/albums','UsersController@userAlbums')->name('user-albums');
 
 Route::get('users/{user}/images/upload','ImagesController@create');
 Route::post('users/{user}/images/upload','ImagesController@store');
+
+Route::get('users/{user}/albums/create','AlbumsController@create');
+Route::post('users/{user}/albums/create','AlbumsController@store');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('images','ImagesController');

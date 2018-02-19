@@ -80,7 +80,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
+            <div class="container mb-5">
                 <div class="col-md-12">
                     @yield('content')
                 </div>

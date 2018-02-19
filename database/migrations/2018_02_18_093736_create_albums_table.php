@@ -21,6 +21,7 @@ class CreateAlbumsTable extends Migration
 	        $table->string('description')->nullable;
 	        $table->string('visible_level');
 	        $table->string('permission');
+	        $table->string('primary_image');
             $table->timestamps();
         });
     }

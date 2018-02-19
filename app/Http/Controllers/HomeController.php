@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
 use App\Images;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,6 @@ class HomeController extends Controller
 		    return response()->json(['html'=>$view]);
 	    }
 
-        return view('home', compact('images'));
+        return view('home', compact('images', 'albums'));
     }
 }

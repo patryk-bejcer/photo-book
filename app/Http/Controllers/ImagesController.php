@@ -56,7 +56,7 @@ class ImagesController extends Controller
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
-                $image->fit(320,370);
+                $image->fit(320,320);
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name));
 
@@ -68,7 +68,7 @@ class ImagesController extends Controller
 	    }
 
         Session::flash('message', "Dodawanie zdjęć zakończyło się pomyślnie.");
-        return Redirect::back();
+        return redirect()->route('user-images', ['id' => Auth::id()]);
     }
 
     public function storeToDB($filename){

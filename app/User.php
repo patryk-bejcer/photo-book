@@ -33,8 +33,16 @@ class User extends Authenticatable
 	    return $this->hasMany('App\Images', 'user_id', 'id')->orderBy('created_at', 'desc');
     }
 
+    public function albums(){
+        return $this->hasMany('App\Album', 'user_id', 'id')->orderBy('created_at', 'desc');
+    }
+
     public function lastImages(){
-        return $this->hasMany('App\Images', 'user_id', 'id')->orderBy('created_at', 'desc')->limit(5);
+        return $this->hasMany('App\Images', 'user_id', 'id')->orderBy('created_at', 'desc')->limit(8);
+    }
+
+    public function lastAlbums(){
+        return $this->hasMany('App\Album', 'user_id', 'id')->orderBy('created_at', 'desc')->limit(4);
     }
 
 }
