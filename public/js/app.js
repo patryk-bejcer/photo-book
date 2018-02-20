@@ -47043,8 +47043,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user'],
+    data: function data() {
+        return {
+            msg: this.user
+        };
+    },
+
+    methods: {
+        test: function test() {
+            axios.get('http://localhost/gallery-portal/public/all-comments').then(function (response) {
+                console.log(response);
+                this.data.msg = 'xxxxxxxxxxxxxxxxxxxxxxxx';
+                console.log(this.msg);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
+});
 
 /***/ }),
 /* 42 */
@@ -47054,8 +47076,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("button", { staticClass: "btn btn-success" }, [
-    _vm._v("Show images")
+  return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-success",
+        on: {
+          click: function($event) {
+            _vm.test()
+          }
+        }
+      },
+      [_vm._v("Show images")]
+    ),
+    _vm._v(" "),
+    _c("span", [_vm._v("Message: " + _vm._s(_vm.msg))])
   ])
 }
 var staticRenderFns = []

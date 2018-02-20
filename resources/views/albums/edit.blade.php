@@ -1,20 +1,31 @@
 @extends('layouts.app')
 
+
+
 @section('content')
-    <h4>Dodawanie nowego albumu</h4>
+    <style>
+        .remove-images .image-checkbox-checked {
+            border-color: red !important;
+        }
+    </style>
+
+    <h4>Edycja albumu</h4>
 
     @if (Session::has('message'))
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
+    <hr>
+
     <form action="{{url('/users/' . $user->id . '/albums/create')}}" method="POST" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 
+
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
-                    <label for="">Wybierz zdjęcia które chcesz dodać (.jpg) </label>
+                    <label for="">Nazwa albumu </label>
                     <input type="text" name="name" id="name" placeholder="Nazwa albumu">
 
                     @if ($errors->has('primaryImage'))
@@ -43,25 +54,31 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-1">
-                <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
-                    <label for="">Wybierz zdjęcia które chcesz dodać (.jpg) </label>
-                    <input name="images[]" type="file" class="form-control upload-input" placeholder="Wybierz zdjęcia" accept=".jpg,.jpeg" multiple>
+        <h4>Zdjęcia w tym albumie</h4><small>(zaznacz zdjęcia które chesz aby zostały usunięte)</small>
+        <br><br>
+        <div class="row remove-images" style="padding:0 10px;">
 
-                    @if ($errors->has('primaryImage'))
-                        <span class="help-block">
-                                                <strong>{{ $errors->first('primaryImage') }}</strong>
-                                            </span>
-                    @endif
+            @foreach(Auth::user()->images as $image)
+
+                <div class="col-md-2 no-padding" style="padding:2px;">
+
+                    <label class="image-checkbox">
+                        <img class="img-responsive" src="{{url('storage/users') . '/' . $image->user_id . '/images/' . 'thumb-' . $image->path }}" />
+                        <input type="checkbox" name="check_image[]" value="{{$image->id}}" />
+                    </label>
 
                 </div>
-            </div>
+
+            @endforeach
         </div>
+
+
+
+
 
         <div class="row">
 
-            <div class="col-sm-10 col-sm-offset-1">
+            <div class="col-sm-12 col-sm-offset-1">
 
                 <div>
                     <a style="margin-left: -1px;" class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -90,6 +107,24 @@
                 </div>
 
 
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
+                    <label for=""> Lub też wybierz zdjęcia które chcesz dodać jako nowe  (.jpg) </label>
+                    <input name="images[]" type="file" class="form-control upload-input" placeholder="Wybierz zdjęcia" accept=".jpg,.jpeg" multiple>
+
+                    @if ($errors->has('primaryImage'))
+                        <span class="help-block">
+                                                <strong>{{ $errors->first('primaryImage') }}</strong>
+                                            </span>
+                    @endif
+
+                </div>
             </div>
         </div>
 

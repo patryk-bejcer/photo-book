@@ -45,7 +45,9 @@ class AlbumsController extends Controller
     public function store(Request $request)
     {
 
-        if($request->file('primary_image')) {
+
+
+	    if($request->file('primary_image')) {
 
             Storage::makeDirectory('public/users/' . Auth::id() . '/images');
 
@@ -76,8 +78,17 @@ class AlbumsController extends Controller
 
 			    $insertImage = $this->storeImageToDB( $thumbnail_image_name );
 
-				$this->storeAlbumImageToDB($insertAlbum, $insertImage);
+				$this->storeAlbumImageToDB($insertAlbum, $insertImage->id);
 
+		    }
+	    }
+
+	    if($request->input('check_image')){
+
+		    $checkedImages = $request->input('check_image');
+
+		    foreach ($checkedImages as $checkImage){
+			    $this->storeAlbumImageToDB($insertAlbum, $checkImage);
 		    }
 	    }
 
@@ -114,9 +125,11 @@ class AlbumsController extends Controller
 	public function storeAlbumImageToDB($insertAlbum, $insertImg){
 		AlbumsImage::create([
 			'album_id' => $insertAlbum->id,
-			'image_id' => $insertImg->id
+			'image_id' => $insertImg,
 		]);
 	}
+
+
 
     /**
      * Display the specified resource.
@@ -140,7 +153,8 @@ class AlbumsController extends Controller
      */
     public function edit($id)
     {
-        //
+	    $user = User::findOrFail($id);
+	    return view('albums.edit', compact('user'));
     }
 
     /**

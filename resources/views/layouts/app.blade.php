@@ -58,6 +58,12 @@
                             <li><a class="nav-link" href="{{ route('login') }}">Logowanie</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">Rejestracja</a></li>
                         @else
+
+
+                            <li><a style="margin-top: 4px;" href="{{url('/users/' . Auth::user()->id . '/images/upload')}}"  class="btn btn-success btn-sm" href="">Dodaj zdjęcia</a></li>
+
+
+
                             <li class="nav-item dropdown">
 
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,7 +72,13 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{url('/users/' . Auth::id() )}}">
-                                        Mój profil
+                                        Profil
+                                    </a>
+                                    <a class="dropdown-item" href="{{url('/users/' . Auth::id() . '/images' )}}">
+                                        Zdjęcia
+                                    </a>
+                                    <a class="dropdown-item" href="{{url('/users/' . Auth::id() . '/albums' )}}">
+                                        Albumy
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -80,6 +92,7 @@
                                     </form>
                                 </div>
                             </li>
+
                         @endguest
                     </ul>
                 </div>
@@ -123,7 +136,7 @@
     </script>
 
     <!-- Scripts -->
-    {{--<script src="{{ asset('js/app.js') }}"></script>--}}
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap tooltips -->
