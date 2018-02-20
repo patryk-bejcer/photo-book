@@ -10,32 +10,24 @@
     <div class="row mb-4" style="padding: 0 15px;">
 
         @foreach($user->lastAlbums as $album)
-            <div class="col-md-3 no-padding" style="padding:2px;">
-                <a href="{{ url('/users/' . $user->id . '/albums/' . $album->id) }}">
-                    <div class="view overlay hm-blue-light">
-                        <img title="{{$album->title}}" class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/' . $album->primary_image }}" alt="">
-                        <div class="mask flex-center">
-                            <h5 class="white-text">{{$album->title}}</h5>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            @include('layouts.includes.album')
         @endforeach
     </div>
 
     <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Ostatnio dodane zdjęcia</h4></a>
     <hr>
 
-    <div class="row" style="padding: 0 15px;">
+    <div class="row justify-content-center " style="padding: 0 30px;">
+
+        <ul id="gallery" class="list-unstyled row">
+            @foreach($user->lastImages as $image)
+                @include('layouts.includes.image')
+            @endforeach
+        </ul>
 
         @foreach($user->lastImages as $image)
-            <div class="col-md-3 no-padding" style="padding:2px;">
-                <a href="">
-                    <img class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/thumb-' . $image->path }}" alt="">
-                </a>
-            </div>
+            @include('layouts.includes.image-right-sidebar')
         @endforeach
-
     </div>
 
 @endsection

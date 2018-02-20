@@ -11,16 +11,10 @@
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
-    <div class="row" style="padding: 0 15px;">
-
+    <div class="row mb-4" style="padding: 0 15px;">
         @foreach($user->albums as $album)
-            <div class="col-md-3 no-padding" style="padding:2px;">
-                <a href="{{ url('/users/' . $user->id . '/albums/' . $album->id) }}">
-                    <img title="{{$album->title}}" class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/' . $album->primary_image }}" alt="">
-                </a>
-            </div>
+            @include('layouts.includes.album')
         @endforeach
-
     </div>
 
 @endsection

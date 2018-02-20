@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('title')->nullable();
             $table->string('alt')->nullable();
+            $table->string('description')->nullable();
             $table->string('path');
             $table->string('visible_level');
 	        $table->string('permission');

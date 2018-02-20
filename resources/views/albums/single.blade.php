@@ -11,14 +11,17 @@
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
-    <div class="row" style="padding: 0 15px;">
+    <div class="row justify-content-center " style="padding: 0 30px;">
+
+        <ul id="gallery" class="list-unstyled row">
+            @foreach($album->images as $image)
+                @include('layouts.includes.image')
+            @endforeach
+        </ul>
 
         @foreach($album->images as $image)
-            <div class="col-md-2 no-padding" style="padding:2px;">
-                <img class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/thumb-' . $image->path }}" alt="">
-            </div>
+            @include('layouts.includes.image-right-sidebar')
         @endforeach
-
     </div>
 
 @endsection
