@@ -11,17 +11,20 @@
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
-    <div class="row justify-content-center " style="padding: 0 30px;">
+    <div class="" style="padding: 0 15px;">
 
-        <ul id="gallery" class="list-unstyled row">
-            @foreach($user->images as $image)
-                @include('layouts.includes.image')
-            @endforeach
-        </ul>
+        <router-view :user="{{$user->id}}" name="imagesIndex"></router-view>
+        <router-view></router-view>
 
-        @foreach($user->images as $image)
-            @include('layouts.includes.image-right-sidebar')
-        @endforeach
+        {{--<ul id="gallery" class="list-unstyled row">--}}
+            {{--@foreach($user->images as $image)--}}
+                {{--@include('layouts.includes.image')--}}
+            {{--@endforeach--}}
+        {{--</ul>--}}
+
+        {{--@foreach($user->images as $image)--}}
+            {{--@include('layouts.includes.image-right-sidebar')--}}
+        {{--@endforeach--}}
 
     </div>
 

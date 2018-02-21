@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Images extends Model
 {
-   protected $fillable = [ 'user_id', 'path', 'visible_level', 'permission' ];
+   protected $fillable = [ 'user_id', 'alt', 'title', 'description', 'path', 'visible_level', 'permission' ];
 
    public function user(){
 	   return $this->hasOne('App\User', 'id', 'user_id');
@@ -15,5 +15,6 @@ class Images extends Model
    public function albums(){
 	   return $this->belongsToMany('App\Album');
    }
+
 
 }

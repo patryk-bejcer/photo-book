@@ -193,3 +193,8 @@
 .navbar-light .navbar-nav .nav-link {
     color: rgba(0,0,0,.8);
 }
+
+label {
+    display: inline-block;
+    margin-bottom: 0;
+}

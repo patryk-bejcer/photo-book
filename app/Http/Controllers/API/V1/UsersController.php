@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Images;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
@@ -42,7 +44,6 @@ class UsersController extends Controller
     }
 
 
-
     public function show($id)
     {
         $user = User::findOrFail($id);
@@ -50,8 +51,8 @@ class UsersController extends Controller
     }
 
     public function userImages($id){
-        $user = User::findOrFail($id);
-        return view('users.images', compact('user'));
+        $images = User::findOrFail($id)->images;
+        return $images;
     }
 
     public function userAlbums($id){
@@ -88,8 +89,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+	public function destroy($id)
+	{
+		$company = Images::findOrFail($id);
+		$company->delete();
+		return '';
+	}
 }

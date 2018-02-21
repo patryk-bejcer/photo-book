@@ -15,15 +15,20 @@ import CompaniesIndex from './components/companies/CompaniesIndex.vue';
 import CompaniesCreate from './components/companies/CompaniesCreate.vue';
 import CompaniesEdit from './components/companies/CompaniesEdit.vue';
 
+import ImagesIndex from './components/images/ImagesIndex.vue';
+import ImageEdit from './components/images/ImageEdit.vue';
+
 const routes = [
     {
         path: '/',
         components: {
-            companiesIndex: CompaniesIndex
+            imagesIndex: ImagesIndex
         }
     },
+    {path: '/edit-image/:id', component: ImageEdit, name: 'editImage'},
     {path: '/admin/companies/create', component: CompaniesCreate, name: 'createCompany'},
     {path: '/admin/companies/edit/:id', component: CompaniesEdit, name: 'editCompany'},
+
 ]
 
 const router = new VueRouter({ routes })

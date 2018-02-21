@@ -109,33 +109,6 @@
     </div>
 
     <!-- Scripts -->
-
-    <!-- Gallery LightBox Settings -->
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            $('#gallery').lightGallery({
-                counter: false,
-                controls: false,
-                mousewheel: false,
-                enableSwipe: false,
-                closable: false,
-            });
-
-            $('#gallery').lightGallery();
-
-            var $lg = $('#gallery');
-
-            $lg.lightGallery();
-
-            $lg.on('onBeforeClose.lg',function(event){
-                $(".single-image-rightbar").modal("hide");
-            });
-
-        });
-    </script>
-
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
@@ -150,6 +123,7 @@
     <!-- LightGallery -->
     <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/lightgallery/lightgallery.js') }}"></script>
+    <script src="{{ asset('script') }}"></script>
 
 </body>
 </html>

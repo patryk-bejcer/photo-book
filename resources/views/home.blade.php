@@ -2,14 +2,18 @@
 
 @section('content')
 
-    <div class="row justify-content-center mb-4">
+    <div class="row mb-4">
 
-        <div class="panel-heading">Companies</div>
-
-        <div class="panel-body table-responsive">
-            <router-view name="companiesIndex"></router-view>
-            <router-view></router-view>
-        </div>
+        <app id="app"
+             :user="{{ auth()->user() }}"
+             :permissions="{{ auth()->user()->permissions()->get() }}"
+        ></app>
+        {{--@if(Auth::check())--}}
+        {{--<div class="table-responsive">--}}
+            {{--<router-view name="companiesIndex"></router-view>--}}
+            {{--<router-view></router-view>--}}
+        {{--</div>--}}
+        {{--@endif--}}
 
 
         {{--<Addtobasket></Addtobasket>--}}
