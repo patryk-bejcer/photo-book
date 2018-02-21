@@ -42,6 +42,7 @@ Route::post('users/{user}/albums/create','AlbumsController@store');
 Route::post('comment-image/{image}','CommentsController@store');
 
 Route::get('all-comments','CommentsController@index');
+Route::delete('all-comments/{comment}','CommentsController@destroy');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

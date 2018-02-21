@@ -83,6 +83,8 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Comment::findOrFail($id);
+        $company->delete();
+        return '';
     }
 }

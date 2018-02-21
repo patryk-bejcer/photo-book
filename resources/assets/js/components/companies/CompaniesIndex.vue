@@ -1,8 +1,10 @@
+
 <template>
     <div>
         <div class="form-group">
             <router-link :to="{name: 'createCompany'}" class="btn btn-success">Create new company</router-link>
         </div>
+
         <div class="panel panel-default">
             <div class="panel-heading">Companies list</div>
             <div class="panel-body">
@@ -17,18 +19,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="comment, index in comments">
-                        <td>{{ comment.user_id }}</td>
-                        <td>{{ comment.image_id }}</td>
-                        <td>{{ comment.type }}</td>
-                        <td>{{ comment.body }}</td>
+                    <tr v-for="company, index in companies">
+                        <td>{{ company.name }}</td>
+                        <td>{{ company.address }}</td>
+                        <td>{{ company.website }}</td>
+                        <td>{{ company.email }}</td>
                         <td>
-                            <router-link :to="{name: 'editCompany', params: {id: comment.id}}" class="btn btn-sm btn-default">
+                            <router-link :to="{name: 'editCompany', params: {id: company.id}}" class="btn btn-xs btn-default">
                                 Edit
                             </router-link>
                             <a href="#"
-                               class="btn btn-sm btn-danger"
-                               v-on:click="deleteEntry(comment.id, index)">
+                               class="btn btn-xs btn-danger"
+                               v-on:click="deleteEntry(company.id, index)">
                                 Delete
                             </a>
                         </td>
@@ -44,27 +46,27 @@
     export default {
         data: function () {
             return {
-                comments: []
+                companies: []
             }
         },
         mounted() {
             var app = this;
-            axios.get('http://localhost/gallery-portal/public/all-comments')
+            axios.get('http://localhost/gallery-portal/public/api/v1/companies')
                 .then(function (resp) {
-                    app.comments = resp.data;
+                    app.companies = resp.data;
                 })
                 .catch(function (resp) {
                     console.log(resp);
-                    alert("Could not load comments");
+                    alert("Could not load companies");
                 });
         },
         methods: {
             deleteEntry(id, index) {
                 if (confirm("Do you really want to delete it?")) {
                     var app = this;
-                    axios.delete('http://localhost/gallery-portal/public/all-comments/' + id)
+                    axios.delete('http://localhost/gallery-portal/public/api/v1/companies/' + id)
                         .then(function (resp) {
-                            app.comments.splice(index, 1);
+                            app.companies.splice(index, 1);
                         })
                         .catch(function (resp) {
                             alert("Could not delete company");
