@@ -33,6 +33,11 @@ Route::get('users/{user}/albums','UsersController@userAlbums')->name('user-album
 Route::get('users/{user}/images/upload','ImagesController@create');
 Route::post('users/{user}/images/upload','ImagesController@store');
 Route::get('users/{user}/images/{image}/','ImagesController@show')->where('image', '[0-9]+');
+Route::get('users/{user}/images/{image}/next','ImagesController@nextImage')->where('image', '[0-9]+');
+Route::get('users/{user}/images/{image}/prev','ImagesController@prevImage')->where('image', '[0-9]+');
+
+Route::get('users/{user}/album/{album}images/{image}/next','ImagesController@nextAlbumImage')->where('image', '[0-9]+');
+Route::get('users/{user}/album/{album}images/{image}/prev','ImagesController@prevAlbumImage')->where('image', '[0-9]+');
 
 Route::get('users/{user}/albums/{album}/','AlbumsController@show')->where('album', '[0-9]+');
 Route::get('users/{user}/albums/{album}/edit','AlbumsController@edit')->where('album', '[0-9]+');

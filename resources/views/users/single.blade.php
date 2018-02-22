@@ -4,6 +4,7 @@
 
     @include('users.includes.user')
 
+    @if(($user->lastAlbums->count()) != 0)
     <a href="{{url('/users/' . $user->id . '/albums' )}}"><h4>Zobacz wszystkie albumy</h4></a>
     <hr>
 
@@ -13,7 +14,9 @@
             @include('layouts.includes.album')
         @endforeach
     </div>
+    @endif
 
+    @if(($user->lastImages->count()) != 0)
     <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Zobacz wszystkie zdjęcia</h4></a>
     <hr>
 
@@ -29,5 +32,8 @@
             @include('layouts.includes.image-right-sidebar')
         @endforeach
     </div>
+    @else
+        <h4>Użytkownik nie dodał jeszcze żadnego zdjęcia</h4>
+    @endif
 
 @endsection

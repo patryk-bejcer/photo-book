@@ -6,6 +6,8 @@
 
     <div class="row">
         <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images')}}">Powrót do profilu</a>
+        <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images/' . $image->id . '/prev')}}">Poprzednie zdjecie</a>
+        <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images/' . $image->id . '/next')}}">Nastepne zdjecie</a>
     </div>
 
     <hr>

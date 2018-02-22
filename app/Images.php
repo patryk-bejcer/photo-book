@@ -13,7 +13,8 @@ class Images extends Model
    }
 
    public function albums(){
-	   return $this->belongsToMany('App\Album');
+	   return $this->belongsToMany('App\Album', 'albums_images',
+		   'image_id', 'album_id');
    }
 
 
