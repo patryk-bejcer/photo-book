@@ -4,7 +4,7 @@
 
     @include('users.includes.user')
 
-    <a href="{{url('/users/' . $user->id . '/albums' )}}"><h4>Ostatnio dodane albumy</h4></a>
+    <a href="{{url('/users/' . $user->id . '/albums' )}}"><h4>Zobacz wszystkie albumy</h4></a>
     <hr>
 
     <div class="row mb-4" style="padding: 0 15px;">
@@ -14,7 +14,7 @@
         @endforeach
     </div>
 
-    <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Ostatnio dodane zdjęcia</h4></a>
+    <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Zobacz wszystkie zdjęcia</h4></a>
     <hr>
 
     <div class="row justify-content-center " style="padding: 0 30px;">

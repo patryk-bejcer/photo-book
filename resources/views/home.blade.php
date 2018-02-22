@@ -4,10 +4,10 @@
 
     <div class="row mb-4">
 
-        <app id="app"
-             :user="{{ auth()->user() }}"
-             :permissions="{{ auth()->user()->permissions()->get() }}"
-        ></app>
+        {{--<app id="app"--}}
+             {{--:user="{{ auth()->user() }}"--}}
+             {{--:permissions="{{ auth()->user()->permissions()->get() }}"--}}
+        {{--></app>--}}
         {{--@if(Auth::check())--}}
         {{--<div class="table-responsive">--}}
             {{--<router-view name="companiesIndex"></router-view>--}}

@@ -13889,7 +13889,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(53);
+module.exports = __webpack_require__(56);
 
 
 /***/ }),
@@ -13907,7 +13907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_companies_CompaniesEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_companies_CompaniesEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_images_ImagesIndex_vue__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_images_ImagesIndex_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_images_ImagesIndex_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_images_ImageEdit_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_images_ImageEdit_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_images_ImageEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_images_ImageEdit_vue__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -32628,7 +32628,7 @@ var Dropdown = function ($$$1) {
       this._element = element;
       this._popper = null;
       this._config = this._getConfig(config);
-      this._menu = this._getMenuElement();
+      // this._menu = this._getMenuElement();
       this._inNavbar = this._detectNavbar();
 
       this._addEventListeners();
@@ -50553,28 +50553,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user'],
     data: function data() {
         return {
             images: [],
-            imagePath: ''
+            imagePath: '',
+            imageURL: '',
+            user_id: window.Laravel.user_id,
+            author_id: window.Laravel.author_id
         };
     },
     mounted: function mounted() {
         var app = this;
         var userid = app.user;
+        console.log('actuall logged user id: ' + this.user_id);
+        console.log('author id ' + this.author_id);
+        // console.log(checkIfAuthor());
         app.imagePath = 'http://localhost/gallery-portal/public/storage/users/' + userid + '/images/thumb-';
+        app.imageURL = 'http://localhost/gallery-portal/public/users/' + userid + '/images/';
         axios.get('http://localhost/gallery-portal/public/api/v1/users/' + userid + '/images').then(function (resp) {
             app.images = resp.data;
         }).catch(function (resp) {
             console.log(resp);
             alert("Could not load images");
         });
+        console.log(this.checkIfAuthor());
     },
 
     methods: {
+        checkIfAuthor: function checkIfAuthor() {
+            if (this.user_id == this.author_id) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         deleteEntry: function deleteEntry(id, index) {
             if (confirm("Jesteś pewien że chcesz usunąc to zdjęcie?")) {
                 var app = this;
@@ -50604,47 +50621,58 @@ var render = function() {
         "div",
         { staticClass: "col-md-3 no-padding", staticStyle: { padding: "5px" } },
         [
-          _c("img", {
-            staticClass: "img-fluid",
-            attrs: { src: _vm.imagePath + image.path, alt: "" }
-          }),
+          _c("div", { staticClass: "view hm-zoom" }, [
+            _c("a", { attrs: { href: _vm.imageURL + image.id } }, [
+              _c("img", {
+                staticClass: "img-fluid",
+                attrs: { src: _vm.imagePath + image.path, alt: "" }
+              })
+            ])
+          ]),
           _vm._v(" "),
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-xs btn-default",
-              staticStyle: {
-                position: "absolute",
-                top: "-1px",
-                right: "35px",
-                padding: "6px 12px",
-                "font-size": "12px"
-              },
-              attrs: { to: { name: "editImage", params: { id: image.id } } }
-            },
-            [_vm._v("\n                        Edycja\n                    ")]
-          ),
+          _vm.checkIfAuthor()
+            ? _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-xs btn-default",
+                  staticStyle: {
+                    position: "absolute",
+                    top: "-1px",
+                    right: "35px",
+                    padding: "6px 12px",
+                    "font-size": "12px"
+                  },
+                  attrs: {
+                    title: "Edytuj zdjęcie",
+                    to: { name: "editImage", params: { id: image.id } }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-edit" })]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn-xs btn-danger",
-              staticStyle: {
-                position: "absolute",
-                top: "-1px",
-                right: "-1px",
-                padding: "6px 12px",
-                "font-size": "12px"
-              },
-              attrs: { href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.deleteEntry(image.id, index)
-                }
-              }
-            },
-            [_vm._v("\n                        X\n                    ")]
-          )
+          _vm.checkIfAuthor()
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn btn-xs btn-danger",
+                  staticStyle: {
+                    position: "absolute",
+                    top: "-1px",
+                    right: "-1px",
+                    padding: "6px 12px",
+                    "font-size": "12px"
+                  },
+                  attrs: { title: "Usuń zdjęcie", href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.deleteEntry(image.id, index)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-trash-alt" })]
+              )
+            : _vm._e()
         ],
         1
       )
@@ -50663,24 +50691,14 @@ if (false) {
 
 /***/ }),
 /* 53 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(59)
+var __vue_script__ = __webpack_require__(54)
 /* template */
-var __vue_template__ = __webpack_require__(60)
+var __vue_template__ = __webpack_require__(55)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50719,7 +50737,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 59 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50787,7 +50805,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).catch(function () {
             alert("Could not load your image");
         });
-        console.log(app.image);
     },
 
     data: function data() {
@@ -50811,7 +50828,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('http://localhost/gallery-portal/public/api/v1/images/' + app.imageId, newImage).then(function (resp) {
                 app.$router.replace('/');
             }).catch(function (resp) {
-                console.log(resp);
                 alert("Could not create your image");
             });
         }
@@ -50819,7 +50835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 60 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -51037,6 +51053,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-1f741750", module.exports)
   }
 }
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

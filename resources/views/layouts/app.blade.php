@@ -18,16 +18,15 @@
     <!-- Material Design Bootstrap -->
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
     <!-- LightBox -->
-    <link href="{{ asset('css/lightgallery.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset('css/lightgallery.css') }}" rel="stylesheet">--}}
     <!-- Your custom styles (optional) -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--}}
 
 </head>
 <body>
     <div id="app">
-
 
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
 
@@ -61,6 +60,7 @@
 
 
                             <li><a style="margin-top: 4px;" href="{{url('/users/' . Auth::user()->id . '/images/upload')}}"  class="btn btn-success btn-sm" href="">Dodaj zdjęcia</a></li>
+                            <li><a style="margin-top: 4px;" href="{{url('/users/' . Auth::user()->id . '/albums/create')}}"  class="btn btn-secondary btn-sm" href="">Dodaj album</a></li>
 
 
 
@@ -121,9 +121,9 @@
     <!-- FontAwesome -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <!-- LightGallery -->
-    <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/lightgallery/lightgallery.js') }}"></script>
-    <script src="{{ asset('script') }}"></script>
+    {{--<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>--}}
+    {{--<script type="text/javascript" src="{{ asset('js/lightgallery/lightgallery.js') }}"></script>--}}
+
 
 </body>
 </html>

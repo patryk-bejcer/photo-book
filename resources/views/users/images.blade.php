@@ -13,6 +13,14 @@
 
     <div class="" style="padding: 0 15px;">
 
+        <script>
+            window.Laravel = <?php echo json_encode([
+            	'csrt_token' => csrf_token(),
+                'user_id' => Auth::id(),
+                'author_id' => $user->id,
+            ]); ?>
+        </script>
+
         <router-view :user="{{$user->id}}" name="imagesIndex"></router-view>
         <router-view></router-view>
 

@@ -4,15 +4,17 @@
         <!--<div class="form-group">-->
             <!--<router-link :to="{name: 'createCompany'}" class="btn btn-success">Create new image</router-link>-->
         <!--</div>-->
-                    <div class="col-md-3 no-padding" v-for="image, index in images" style="padding:5px;">
-                        <img class="img-fluid" :src="imagePath + image.path" alt="">
-                        <router-link style="position: absolute;top: -1px;right: 35px;padding: 6px 12px;font-size: 12px;" :to="{name: 'editImage', params: {id: image.id}}" class="btn btn-xs btn-default">
-                            Edycja
+                    <div  class="col-md-3 no-padding" v-for="image, index in images" style="padding:5px;">
+                        <div class="view hm-zoom">
+                        <a :href="imageURL + image.id"><img class="img-fluid" :src="imagePath + image.path" alt=""></a>
+                        </div>
+                        <router-link title="Edytuj zdjęcie" v-if="checkIfAuthor()"   style="position: absolute;top: -1px;right: 35px;padding: 6px 12px;font-size: 12px;" :to="{name: 'editImage', params: {id: image.id}}" class="btn btn-xs btn-default">
+                            <i class="fas fa-edit"></i>
                         </router-link>
-                        <a href="#"
+                        <a title="Usuń zdjęcie" v-if="checkIfAuthor()" href="#"
                            class="btn btn-xs btn-danger" style="position: absolute;top: -1px;right: -1px;padding: 6px 12px;font-size: 12px;"
                            v-on:click="deleteEntry(image.id, index)">
-                            X
+                            <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
     </div>
@@ -24,13 +26,20 @@
         data: function () {
             return {
                 images: [],
-                imagePath: ''
+                imagePath: '',
+                imageURL: '',
+                user_id: window.Laravel.user_id,
+                author_id: window.Laravel.author_id
             }
         },
         mounted() {
             var app = this;
             let userid = app.user;
+            console.log('actuall logged user id: ' + this.user_id);
+            console.log('author id ' + this.author_id);
+            // console.log(checkIfAuthor());
             app.imagePath = 'http://localhost/gallery-portal/public/storage/users/' + userid + '/images/thumb-';
+            app.imageURL = 'http://localhost/gallery-portal/public/users/' + userid + '/images/';
             axios.get('http://localhost/gallery-portal/public/api/v1/users/' + userid + '/images')
                 .then(function (resp) {
                     app.images = resp.data;
@@ -39,8 +48,16 @@
                     console.log(resp);
                     alert("Could not load images");
                 });
+            console.log(this.checkIfAuthor());
         },
         methods: {
+            checkIfAuthor(){
+                if(this.user_id == this.author_id){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
             deleteEntry(id, index) {
                 if (confirm("Jesteś pewien że chcesz usunąc to zdjęcie?")) {
                     var app = this;

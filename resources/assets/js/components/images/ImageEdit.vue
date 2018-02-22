@@ -63,7 +63,6 @@
                 .catch(function () {
                     alert("Could not load your image")
                 });
-            console.log(app.image);
 
         },
         data: function () {
@@ -89,7 +88,6 @@
                         app.$router.replace('/');
                     })
                     .catch(function (resp) {
-                        console.log(resp);
                         alert("Could not create your image");
                     });
             }

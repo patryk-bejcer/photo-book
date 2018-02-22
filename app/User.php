@@ -45,4 +45,5 @@ class User extends Authenticatable
         return $this->hasMany('App\Album', 'user_id', 'id')->orderBy('created_at', 'desc')->limit(4);
     }
 
+
 }

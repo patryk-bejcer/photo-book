@@ -51,7 +51,7 @@ class ImagesController extends Controller
 
 		    foreach ($request->images as $imagee) {
 
-                $image = Image::make($imagee)->encode('jpg', 85);
+                $image = Image::make($imagee)->encode('jpg', 85)->fit(1200);
 
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
@@ -86,9 +86,11 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($user_id, $image_id)
     {
-        //
+    	$user = User::findOrFail($user_id);
+        $image = Images::findOrFail($image_id);
+        return view('images.single', compact('image', 'user'));
     }
 
     /**
