@@ -17,5 +17,9 @@ class Images extends Model
 		   'image_id', 'album_id');
    }
 
+    public function comments(){
+        return $this->hasMany('App\Comment', 'user_id', 'id');
+    }
+
 
 }

@@ -18,6 +18,8 @@ import CompaniesEdit from './components/companies/CompaniesEdit.vue';
 import ImagesIndex from './components/images/ImagesIndex.vue';
 import ImageEdit from './components/images/ImageEdit.vue';
 
+import CommentsIndex from './components/comments/CommentsIndex.vue';
+
 const routes = [
     {
         path: '/',
@@ -28,8 +30,15 @@ const routes = [
     {path: '/edit-image/:id', component: ImageEdit, name: 'editImage'},
     {path: '/admin/companies/create', component: CompaniesCreate, name: 'createCompany'},
     {path: '/admin/companies/edit/:id', component: CompaniesEdit, name: 'editCompany'},
+    {path: '/comments', component: CommentsIndex, name: 'indexComments'},
+    // {path: '/edit-image/:id', component: ImageEdit, name: 'editImage'},
+    // {path: '/admin/companies/create', component: CompaniesCreate, name: 'createCompany'},
+    // {path: '/admin/companies/edit/:id', component: CompaniesEdit, name: 'editCompany'},
+
 
 ]
+
+Vue.component('comments', require('./components/comments/CommentsIndex'));
 
 const router = new VueRouter({ routes })
 

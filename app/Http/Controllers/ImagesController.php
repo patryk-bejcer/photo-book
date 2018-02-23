@@ -96,10 +96,8 @@ class ImagesController extends Controller
 
 		$user = User::findOrFail($user_id);
 
-		if(!$image = Images::where('id', '<', $image_id)->where('user_id', '=',  $user_id)->first()){
-
-			$image = Images::where('user_id', '=',  $user_id)->first();
-
+		if(!$image = Images::where('id', '<', $image_id)->where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first()){
+			$image = Images::where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first();
 		}
 		return view('images.single', compact('image', 'user'));
 	}

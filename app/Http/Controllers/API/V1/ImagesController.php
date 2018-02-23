@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Comment;
 use App\Images;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,10 @@ class ImagesController extends Controller
 
     public function show($id)
     {
-        return Images::findOrFail($id);
+        $image = Images::findOrFail($id);
+        $comments = $image->comments;
+
+        return $comments;
     }
 
     public function update(Request $request, $id)

@@ -24,5 +24,7 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 	Route::delete('images/{image}','UsersController@destroy');
 	Route::get('images/{id}','ImagesController@show');
 	Route::patch('images/{id}','ImagesController@update');
+	Route::post('comment','CommentsController@store');
+	Route::get('images/{id}/comments','ImagesController@show');
 });
 

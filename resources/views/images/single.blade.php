@@ -25,6 +25,25 @@
                 @if($image->description)
             <p><small>Opis zdjęcia: {{$image->description}}</small></p>
                     @endif
+
+                <script>
+                    window.Laravel = <?php echo json_encode([
+                        'csrt_token' => csrf_token(),
+                        'user_id' => Auth::id(),
+                        'author_id' => $user->id,
+                        'image_id' => $image->id,
+                    ]); ?>
+                </script>
+
+                <comments></comments>
+
+
+                {{--<router-view :user="{{$user->id}}" name="commentsIndex"></router-view>--}}
+                {{--<router-view></router-view>--}}
+
+            {{--@include('comments.single')--}}
+
+
         </div>
     </div>
 
