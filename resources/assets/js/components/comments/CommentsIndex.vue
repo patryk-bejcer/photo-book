@@ -29,7 +29,7 @@
                 comments: [],
                 comment: {
                     user_id: '1',
-                    image_id: '1',
+                    image_id: '2',
                     album_id: '1',
                     type: 'image',
                     body: ''
@@ -44,6 +44,7 @@
         mounted() {
             var app = this;
             let userid = app.user;
+            let comments = app.comments;
             let imageid = app.image_id;
             console.log('actuall logged user id: ' + this.user_id);
             console.log('author id ' + this.author_id);
@@ -59,14 +60,23 @@
             // console.log(this.checkIfAuthor());
         },
         methods: {
+            fetchCommentsList() {
+                var app = this;
+                var imageid = app.image_id;
+                axios.get('http://localhost/gallery-portal/public/api/v1/images/' + imageid + '/comments').then((res) => {
+                    app.comments = res.data;
+                });
+            },
             saveForm() {
-                console.log(this.comment);
-                event.preventDefault();
+                // console.log(this.comment);
+                // event.preventDefault();
                 var app = this;
                 var newComment = app.comment;
                 axios.post('http://localhost/gallery-portal/public/api/v1/comment', newComment)
                     .then(function (resp) {
-                        app.$router.push({path: '/'});
+                        // console.log(app.comments);
+                        newComment.body = '';
+                        app.fetchCommentsList();
                     })
                     .catch(function (resp) {
                         console.log(resp);
