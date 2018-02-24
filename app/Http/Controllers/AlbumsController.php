@@ -15,15 +15,6 @@ use Intervention\Image\Facades\Image;
 
 class AlbumsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +36,15 @@ class AlbumsController extends Controller
     public function store(Request $request)
     {
 
-
+	    $request->validate([
+		    'name' => 'required|max:55|min:3',
+		    'primary_image' => 'required',
+		    'images'  => 'required'
+	    ],[
+		    'required' => 'To pole jest wymagane',
+		    'min' => 'Pole musi mieć minimum :min znaków',
+		    'max' => 'Pole może mieć maksymalnie :max znaków'
+	    ]);
 
 	    if($request->file('primary_image')) {
 
@@ -117,6 +116,8 @@ class AlbumsController extends Controller
 			'path' =>  $filename,
 			'visible_level' => 'publish',
 			'permission' => 'all',
+			'comments' => true,
+			'rating' => true,
 		]);
 
 		return $image;

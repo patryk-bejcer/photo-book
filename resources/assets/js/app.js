@@ -11,14 +11,10 @@ import VueRouter from 'vue-router';
 
 window.Vue.use(VueRouter);
 
-import CompaniesIndex from './components/companies/CompaniesIndex.vue';
-import CompaniesCreate from './components/companies/CompaniesCreate.vue';
-import CompaniesEdit from './components/companies/CompaniesEdit.vue';
-
 import ImagesIndex from './components/images/ImagesIndex.vue';
 import ImageEdit from './components/images/ImageEdit.vue';
+import CommentsIndex from './components/comments/Comments.vue';
 
-import CommentsIndex from './components/comments/CommentsIndex.vue';
 
 const routes = [
     {
@@ -28,18 +24,15 @@ const routes = [
         }
     },
     {path: '/edit-image/:id', component: ImageEdit, name: 'editImage'},
-    {path: '/admin/companies/create', component: CompaniesCreate, name: 'createCompany'},
-    {path: '/admin/companies/edit/:id', component: CompaniesEdit, name: 'editCompany'},
+
     {path: '/comments', component: CommentsIndex, name: 'indexComments'},
-    // {path: '/edit-image/:id', component: ImageEdit, name: 'editImage'},
-    // {path: '/admin/companies/create', component: CompaniesCreate, name: 'createCompany'},
-    // {path: '/admin/companies/edit/:id', component: CompaniesEdit, name: 'editCompany'},
+
 
 
 ]
 
-Vue.component('comments', require('./components/comments/CommentsIndex'));
+Vue.component('comments', require('./components/comments/Comments'));
 
-const router = new VueRouter({ routes })
+const router = new VueRouter({ routes });
 
-const app = new Vue({ router }).$mount('#app')
+const app = new Vue({ router }).$mount('#app');

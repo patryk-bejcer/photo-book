@@ -13,53 +13,77 @@
 
 use Intervention\Image\Facades\Image;
 
+/* ===================== */
+/* === Home page routes === */
+/* ===================== */
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
+/* ===================== */
+/* === Users routes === */
+/* ===================== */
 Auth::routes();
+Route::resource('users','UsersController');
 
-/* Admin routes */
+/* ===================== */
+/* === Admin routes === */
+/* ===================== */
+
+/* Get admin dashboard */
 Route::get('admin', function () { return view('dashboard'); })->middleware('isAdmin');
+/* Get admin user resource  */
 Route::resource('admin/users', 'UsersBackendController');
+/* Get admin roles resource  */
 Route::resource('admin/roles', 'RolesController');
+/* Get admin permissions resource  */
 Route::resource('admin/permissions', 'PermissionsController');
 
-/* User routes */
-Route::resource('users','UsersController');
+/* ===================== */
+/* === Images routes === */
+/* ===================== */
+
 Route::resource('images','ImagesController');
-
+/* Get all user images */
 Route::get('users/{user}/images','UsersController@userImages')->name('user-images');
-Route::get('users/{user}/albums','UsersController@userAlbums')->name('user-albums');
-
+/* Get upload images form */
 Route::get('users/{user}/images/upload','ImagesController@create');
+/* Save upload images by user to database */
 Route::post('users/{user}/images/upload','ImagesController@store');
+/* Show single user image */
 Route::get('users/{user}/images/{image}/','ImagesController@show')->where('image', '[0-9]+');
+/* Show next image of a given user */
 Route::get('users/{user}/images/{image}/next','ImagesController@nextImage')->where('image', '[0-9]+');
+/* Show previous image of a given user */
 Route::get('users/{user}/images/{image}/prev','ImagesController@prevImage')->where('image', '[0-9]+');
+/* Rate single image */
+Route::post('images/{image}/rate','ImagesController@rate')->name('rate');
 
+
+/* ===================== */
+/* === Albums routes === */
+/* ===================== */
+
+/* Get all user albums */
+Route::get('users/{user}/albums','UsersController@userAlbums')->name('user-albums');
+/* Show next album of a given user */
 Route::get('users/{user}/album/{album}images/{image}/next','ImagesController@nextAlbumImage')->where('image', '[0-9]+');
+/* Show previous album of a given user */
 Route::get('users/{user}/album/{album}images/{image}/prev','ImagesController@prevAlbumImage')->where('image', '[0-9]+');
-
+/* Show single album of user */
 Route::get('users/{user}/albums/{album}/','AlbumsController@show')->where('album', '[0-9]+');
+/* Get create album form */
+Route::get('users/{user}/albums/create','AlbumsController@create');
+/* Save create album form to database */
+Route::post('users/{user}/albums/create','AlbumsController@store');
+/* Edit single album of user */
 Route::get('users/{user}/albums/{album}/edit','AlbumsController@edit')->where('album', '[0-9]+');
 
-Route::get('users/{user}/albums/create','AlbumsController@create');
-Route::post('users/{user}/albums/create','AlbumsController@store');
-
-
+/* ===================== */
+/* === Comments routes === */
+/* ===================== */
 Route::post('comment-image/{image}','CommentsController@store');
-
 Route::get('all-comments','CommentsController@index');
 Route::delete('all-comments/{comment}','CommentsController@destroy');
 
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('images','ImagesController');
-Route::get('/test', function()
-{
-	$imgPath = asset('img/foo.jpg');
-
-	$img = Image::make($imgPath)->resize(300, 200);
-
-	return $img->response('jpg');
-});
 

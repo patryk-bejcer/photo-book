@@ -151,6 +151,7 @@ return [
          * Package Service Providers...
          */
 	    Intervention\Image\ImageServiceProvider::class,
+	    Ghanem\Rating\RatingServiceProvider::class,
 
         /*
          * Application Service Providers...

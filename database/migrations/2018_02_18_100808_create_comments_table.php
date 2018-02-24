@@ -17,8 +17,8 @@ class CreateCommentsTable extends Migration
 
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('image_id')->unsigned();
-            $table->integer('album_id')->unsigned();
+            $table->integer('image_id')->unsigned()->nullable();
+            $table->integer('album_id')->unsigned()->nullable();
             $table->string('type'); //image or album
             $table->string('body');
             $table->timestamps();

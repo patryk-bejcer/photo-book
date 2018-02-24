@@ -19,8 +19,8 @@ class MakeAlbumsImagesTable extends Migration
 		    $table->integer('album_id')->unsigned();
 		    $table->integer('image_id')->unsigned();
 
-		    $table->foreign('album_id')->references('id')->on('albums');
-		    $table->foreign('image_id')->references('id')->on('images');
+//		    $table->foreign('album_id')->references('id')->on('albums');
+//		    $table->foreign('image_id')->references('id')->on('images');
 
 	    });
     }

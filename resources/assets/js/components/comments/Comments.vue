@@ -1,23 +1,22 @@
 
 <template>
     <div class="row">
-        <!--<div class="form-group">-->
-        <!--<router-link :to="{name: 'createCompany'}" class="btn btn-success">Create new image</router-link>-->
-        <!--</div>-->
+
         <div  class="col-md-12" v-for="comment, index in comments" >
-            <p>Autor:{{comment.user_id}}</p>
-            <p>Treść komentarza:{{comment.body}}</p>
+            <p style="margin-bottom:2px; font-size:13px; font-weight:bold;">{{comment.user_name}} <small>{{comment.created_at}}</small></p>
+            <p style="font-size:12px; line-height: 17px;  margin-bottom: 9px;">{{comment.body}}</p>
         </div>
 
-        <form v-on:submit="saveForm()">
+        <div class="col-md-12">
+        <form v-if="checkIfIsLogged()" v-on:submit="saveForm()">
             <div class="row">
                 <div class="col-12 form-group">
-                    <label class="control-label">Treść koemntarza</label>
-                    <input type="text" v-model="comment.body" class="form-control">
+                    <input style="font-size:12px; padding-left:7px;" placeholder="Tutaj wpisz treść komentarza" type="text" v-model="comment.body" class="form-control">
                 </div>
             </div>
-            <input type="submit">
+            <input style="display: none;"  type="submit" class="submit_on_enter btn btn-primary pull-right">
         </form>
+        </div>
 
     </div>
 </template>
@@ -26,19 +25,22 @@
     export default {
         data: function () {
             return {
+
                 comments: [],
                 comment: {
-                    user_id: '1',
-                    image_id: '2',
+                    user_id: window.Laravel.user_id,
+                    image_id: window.Laravel.image_id,
                     album_id: '1',
                     type: 'image',
                     body: ''
                 },
+                user: {},
                 imagePath: '',
                 imageURL: '',
                 user_id: window.Laravel.user_id,
                 author_id: window.Laravel.author_id,
-                image_id: window.Laravel.image_id
+                image_id: window.Laravel.image_id,
+                is_logged: window.Laravel.is_logged
             }
         },
         mounted() {
@@ -48,6 +50,7 @@
             let imageid = app.image_id;
             console.log('actuall logged user id: ' + this.user_id);
             console.log('author id ' + this.author_id);
+            console.log('image id ' + this.image_id);
             // console.log(checkIfAuthor());
             axios.get('http://localhost/gallery-portal/public/api/v1/images/' + imageid + '/comments')
                 .then(function (resp) {
@@ -60,6 +63,14 @@
             // console.log(this.checkIfAuthor());
         },
         methods: {
+            checkIfIsLogged(){
+                console.log('check if loggin: ' + this.is_logged);
+                if(this.is_logged){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
             fetchCommentsList() {
                 var app = this;
                 var imageid = app.image_id;
@@ -68,13 +79,14 @@
                 });
             },
             saveForm() {
-                // console.log(this.comment);
+                console.log(this.comment);
                 // event.preventDefault();
                 var app = this;
                 var newComment = app.comment;
+                console.log(app.comment);
                 axios.post('http://localhost/gallery-portal/public/api/v1/comment', newComment)
                     .then(function (resp) {
-                        // console.log(app.comments);
+
                         newComment.body = '';
                         app.fetchCommentsList();
                     })

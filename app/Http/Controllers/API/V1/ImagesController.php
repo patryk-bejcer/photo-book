@@ -1,10 +1,10 @@
 <?php
 
-
 namespace App\Http\Controllers\Api\V1;
 
 use App\Comment;
 use App\Images;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,32 +21,46 @@ class ImagesController extends Controller
         return Images::all();
     }
 
-    public function show($id)
+	public function show($id)
+	{
+		return Images::findOrFail($id);
+	}
+
+    public function comments($id)
     {
         $image = Images::findOrFail($id);
-        $comments = $image->comments;
+        $comments = $image->comments()->get();
 
-        return $comments;
+        $completeArray = array();
+
+        foreach ($comments as $comment){
+        	$user = User::findOrFail($comment->user_id);
+	        $newArr = array('user_name' => $user->name);
+	        $arr = array_merge($comment->toArray(), $newArr);
+	        array_push($completeArray, $arr);
+        }
+
+	    return response()->json($completeArray);
     }
 
     public function update(Request $request, $id)
     {
-        $company = Images::findOrFail($id);
-        $company->update($request->all());
+        $image = Images::findOrFail($id);
+        $image->update($request->all());
 
-        return $company;
+        return $image;
     }
 
     public function store(Request $request)
     {
-        $company = Images::create($request->all());
-        return $company;
+        $image = Images::create($request->all());
+        return $image;
     }
 
     public function destroy($id)
     {
-        $company = Images::findOrFail($id);
-        $company->delete();
+        $image = Images::findOrFail($id);
+        $image->delete();
         return '';
     }
 }

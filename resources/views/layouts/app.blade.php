@@ -11,18 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet">
-    <!-- LightBox -->
-    {{--<link href="{{ asset('css/lightgallery.css') }}" rel="stylesheet">--}}
-    <!-- Your custom styles (optional) -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--}}
+    {{--<link href="{{ asset('css/all.css') }}" rel="stylesheet">--}}
 
 </head>
 <body>
@@ -33,7 +25,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{--{{ config('app.name', 'Laravel') }}--}}
-                    <img src="{{asset('img/logo.png')}}" alt="">
+                    <img src="{{asset('img/logo.png')}}" alt=""> photobook
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -59,8 +51,8 @@
                         @else
 
 
-                            <li><a style="margin-top: 4px;" href="{{url('/users/' . Auth::user()->id . '/images/upload')}}"  class="btn btn-success btn-sm" href="">Dodaj zdjęcia</a></li>
-                            <li><a style="margin-top: 4px;" href="{{url('/users/' . Auth::user()->id . '/albums/create')}}"  class="btn btn-secondary btn-sm" href="">Dodaj album</a></li>
+                            <li><a style="margin-top: 6px; margin-left:4px; margin-right:4px;" href="{{url('/users/' . Auth::user()->id . '/images/upload')}}"  class="btn btn-success btn-sm" href="">Dodaj zdjęcia</a></li>
+                            <li><a style="margin-top: 6px; margin-left:4px; margin-right:4px;" href="{{url('/users/' . Auth::user()->id . '/albums/create')}}"  class="btn btn-secondary btn-sm" href="">Dodaj album</a></li>
 
 
 
@@ -101,7 +93,7 @@
 
         <main class="py-4">
             <div class="container mb-5">
-                <div class="col-md-12">
+                <div class="col-md-10 offset-md-1">
                     @yield('content')
                 </div>
             </div>
@@ -111,15 +103,15 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- JQuery -->
-    <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>--}}
     <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/popper.min.js') }}"></script>--}}
     <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>--}}
     <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>--}}
     <!-- FontAwesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    {{--<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>--}}
     <!-- LightGallery -->
     {{--<script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>--}}
     {{--<script type="text/javascript" src="{{ asset('js/lightgallery/lightgallery.js') }}"></script>--}}

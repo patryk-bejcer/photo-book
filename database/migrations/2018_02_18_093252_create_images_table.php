@@ -20,10 +20,11 @@ class CreateImagesTable extends Migration
             $table->string('alt')->nullable();
             $table->string('description')->nullable();
             $table->string('path');
+            $table->boolean('comments')->nullable();
+	        $table->boolean('rating')->nullable();
             $table->string('visible_level');
 	        $table->string('permission');
             $table->timestamps();
-
         });
     }
 

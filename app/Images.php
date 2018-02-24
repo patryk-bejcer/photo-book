@@ -2,11 +2,15 @@
 
 namespace App;
 
+use Ghanem\Rating\Traits\Ratingable as Rating;
 use Illuminate\Database\Eloquent\Model;
 
 class Images extends Model
 {
-   protected $fillable = [ 'user_id', 'alt', 'title', 'description', 'path', 'visible_level', 'permission' ];
+
+	use Rating;
+
+   protected $fillable = [ 'user_id', 'alt', 'title', 'description', 'path', 'visible_level', 'permission' , 'comments', 'rating'];
 
    public function user(){
 	   return $this->hasOne('App\User', 'id', 'user_id');
@@ -18,7 +22,7 @@ class Images extends Model
    }
 
     public function comments(){
-        return $this->hasMany('App\Comment', 'user_id', 'id');
+        return $this->hasMany('App\Comment', 'image_id', 'id');
     }
 
 

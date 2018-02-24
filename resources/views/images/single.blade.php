@@ -2,50 +2,52 @@
 
 @section('content')
 
-    {{--@include('users.includes.user')--}}
+    @include('images.includes.paginate')
 
-    <div class="row">
-        <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images')}}">Powrót do profilu</a>
-        <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images/' . $image->id . '/prev')}}">Poprzednie zdjecie</a>
-        <a style="" class="btn btn-secondary btn-sm pull-right" href="{{url('/users/' . $user->id . '/images/' . $image->id . '/next')}}">Nastepne zdjecie</a>
-    </div>
+    <div class="row single-img">
 
-    <hr>
-
-    <div class="row">
-        <div class="col-md-9 no-padding">
+        <!-- Image -->
+        <div class="col-md-8 no-padding image">
             <img class="img-fluid hm-red-light" src="{{url('storage/users') . '/' . $image->user_id . '/images/' . $image->path }}">
         </div>
-        <div class="col-md-3">
-            @if($image->title)
-                <h5 class="mt-3"><i class="fas fa-image"></i> {{$image->title}} </h5>
-            @endif
-            <h6 class="mt-3"><i class="fas fa-user"></i> Autor: <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h6>
 
-                @if($image->description)
-            <p><small>Opis zdjęcia: {{$image->description}}</small></p>
+        <!-- Right Sidebar -->
+        <div class="col-md-4 right-sidebar">
+
+                <h5 class="mt-3">
+                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a>
+                </h5>
+
+            <hr class="mb-2 mt-2">
+
+            @if ($image->rating)
+                @include('images.includes.rate')
+            @endif
+
+                @if($image->title)
+                    <h5 class="mt-2 mb-0"><i class="fa fa-camera-retro" aria-hidden="true"></i> {{$image->title}} </h5>
+                @endif
+
+
+                    @if($image->description)
+                        <p style="line-height: 16px;" class="mt-1"><small>{{$image->description}}</small></p>
                     @endif
 
-                <script>
-                    window.Laravel = <?php echo json_encode([
-                        'csrt_token' => csrf_token(),
-                        'user_id' => Auth::id(),
-                        'author_id' => $user->id,
-                        'image_id' => $image->id,
-                    ]); ?>
-                </script>
-
-                <comments></comments>
-
-
-                {{--<router-view :user="{{$user->id}}" name="commentsIndex"></router-view>--}}
-                {{--<router-view></router-view>--}}
-
-            {{--@include('comments.single')--}}
-
-
+                    @if ($image->comments)
+                        Komentarze
+                        <hr class="mt-1 mb-2">
+                        @include('images.includes.comments')
+                    @endif
         </div>
     </div>
 
+    <div class="img-permissions">
+    @if($image->permission == 0)
+        <p><small>* Autor nie wyraża zgody na rozpowszechnianie</small></p>
+    @elseif($image->permission == 1)
+        <p><small>* Autor wyraża zgodę na rozpowszechnianie</small></p>
+    @endif
+    </div>
 
 @endsection

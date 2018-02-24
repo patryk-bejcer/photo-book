@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Images;
 use App\User;
+use Ghanem\Rating\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -15,18 +17,10 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class ImagesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        echo 'index';
-    }
+
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for uploads a new images.
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,12 +45,12 @@ class ImagesController extends Controller
 
 		    foreach ($request->images as $imagee) {
 
-                $image = Image::make($imagee)->encode('jpg', 85)->fit(1200);
+                $image = Image::make($imagee)->encode('jpg', 85)->orientate()->fit(1600,1400);
 
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
-                $image->fit(360,360);
+                $image->orientate()->fit(360,360);
                 $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
                 $image->save(public_path('storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name));
 
@@ -77,6 +71,8 @@ class ImagesController extends Controller
             'path' =>  $filename,
             'visible_level' => 'publish',
             'permission' => 'all',
+            'comments' => true,
+            'rating' => true,
         ]);
     }
 
@@ -92,6 +88,7 @@ class ImagesController extends Controller
 		return view('images.single', compact('image', 'user'));
 	}
 
+
 	public function prevImage($user_id, $image_id){
 
 		$user = User::findOrFail($user_id);
@@ -102,8 +99,6 @@ class ImagesController extends Controller
 		return view('images.single', compact('image', 'user'));
 	}
 
-
-
     /**
      * Display the specified resource.
      *
@@ -112,8 +107,14 @@ class ImagesController extends Controller
      */
     public function show($user_id, $image_id)
     {
+
+    	if(Auth::check()){
+    		$user_rate = Rating::where(['']);
+	    }
+
     	$user = User::findOrFail($user_id);
         $image = Images::findOrFail($image_id);
+
         return view('images.single', compact('image', 'user'));
     }
 
@@ -150,4 +151,19 @@ class ImagesController extends Controller
     {
         //
     }
+
+
+    public function rate($image_id){
+
+    	$value = Input::get('rate_value');
+	    $user = Auth::user();
+	    $image = Images::findOrFail($image_id);
+	    $rating = $image->rating([
+		    'rating' => $value
+	    ], $user);
+
+		return back();
+
+    }
+
 }

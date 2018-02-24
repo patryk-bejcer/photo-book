@@ -8,13 +8,13 @@
                         <div class="view hm-zoom">
                         <a :href="imageURL + image.id"><img class="img-fluid" :src="imagePath + image.path" alt=""></a>
                         </div>
-                        <router-link title="Edytuj zdjęcie" v-if="checkIfAuthor()"   style="position: absolute;top: -1px;right: 35px;padding: 6px 12px;font-size: 12px;" :to="{name: 'editImage', params: {id: image.id}}" class="btn btn-xs btn-default">
-                            <i class="fas fa-edit"></i>
+                        <router-link title="Edytuj zdjęcie" v-if="checkIfAuthor()"   style="position: absolute;top: -1px;right: 36px;padding: 6px 12px;font-size: 12px;" :to="{name: 'editImage', params: {id: image.id}}" class="btn btn-xs btn-success">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
                         </router-link>
                         <a title="Usuń zdjęcie" v-if="checkIfAuthor()" href="#"
                            class="btn btn-xs btn-danger" style="position: absolute;top: -1px;right: -1px;padding: 6px 12px;font-size: 12px;"
                            v-on:click="deleteEntry(image.id, index)">
-                            <i class="fas fa-trash-alt"></i>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
                         </a>
                     </div>
     </div>

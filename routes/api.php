@@ -17,14 +17,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], function () {
-    Route::resource('companies', 'CompaniesController', ['except' => ['create', 'edit']]);
+
+	/* ===================== */
+	/* === API images === */
+	/* ===================== */
+
+	// All images from single user //
 	Route::get('users/{user}/images','UsersController@userImages');
-	Route::delete('images/{image}','UsersController@destroy');
+	// Remove single image //
+	Route::delete('images/{image}','ImagesController@destroy');
+	// Get single image //
 	Route::get('images/{id}','ImagesController@show');
+	// Update  single image //
 	Route::patch('images/{id}','ImagesController@update');
+
+	/* ===================== */
+	/* === API comments === */
+	/* ===================== */
+
+	// Create new comment to image //
 	Route::post('comment','CommentsController@store');
-	Route::get('images/{id}/comments','ImagesController@show');
+	// Get all comments on image  //
+	Route::get('images/{id}/comments','ImagesController@comments');
+
 });
 

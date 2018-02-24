@@ -4,7 +4,7 @@
 
     @include('users.includes.user')
 
-    <h4 class="mt-3"><i class="fas fa-image"></i> Zdjęcia użytkownika <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h4>
+    <h4 class="mt-3"><i class="fa fa-image"></i> Zdjęcia użytkownika <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h4>
     <hr>
 
     @if (Session::has('message'))

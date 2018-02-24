@@ -28,7 +28,9 @@
         </div>
 
         <div class="row">
-            <input type="submit" class="btn btn-secondary right">
+            <div class="col-sm-10 col-sm-offset-1">
+                <input type="submit" class="btn btn-secondary right">
+            </div>
         </div>
 
     </form>

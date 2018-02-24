@@ -8,9 +8,9 @@
         <a href="{{url('/users/' . $user->id . '/albums/' . $album->id . '/edit')}}" class="btn btn-success">Edytuj ten album</a>
     @endif
 
-    <h2 class="mt-3 mb-4"><i class="fas fa-user"></i> {{ $user->name }}</h2>
+    <h2 class="mt-3 mb-4"> <i class="fa fa-user-circle-o" aria-hidden="true"></i> {{ $user->name }}</h2>
 
-    <h4 class="mt-3"><i class="fas fa-image"></i> {{$album->title}} <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h4>
+    <h4 class="mt-3"> <i class="fa fa-photo" aria-hidden="true"></i> {{$album->title}} <a href="{{url('/users/' . $user->id)}}">{{ $user->name }}</a></h4>
     <hr>
 
     @if (Session::has('message'))
