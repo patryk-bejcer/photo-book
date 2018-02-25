@@ -1,6 +1,6 @@
 <template>
     <div v-if="checkIfAuthor()" class="row">
-                    <div class="col-md-5 no-padding" >
+                    <div class="col-md-4 no-padding" >
                         <form v-on:submit="saveForm()" class="no-padding" style="padding-left:5px;">
                             <div class="row">
                                 <div class="col-12 form-group">
@@ -69,13 +69,13 @@
                                         <h6>Dostępność:</h6>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                                <input type="radio" class="form-check-input" v-model="image.visible_level"  value="0" checked>
                                                 Wszyscy użytkownicy
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
-                                                <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                                                <input type="radio" class="form-check-input" v-model="image.visible_level"  value="1">
                                                 Zarejestrowani użytkownicy
                                             </label>
                                         </div>
@@ -111,7 +111,7 @@
                         </form>
                     </div>
 
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <div class="form-group mb-0">
                             <router-link to="/" class="pull-right"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Powrót</router-link>
                         </div>
@@ -124,7 +124,7 @@
         mounted() {
             let app = this;
             let id = app.$route.params.id;
-            app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/1/images/';
+            app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/' + this.author_id + '/images/';
             app.imageId = id;
             axios.get('http://localhost/gallery-portal/public/api/v1/images/' + id)
                 .then(function (resp) {

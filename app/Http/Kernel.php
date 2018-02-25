@@ -61,5 +61,6 @@ class Kernel extends HttpKernel
         'isAdmin' => \App\Http\Middleware\AdminMiddleware::class,
         'clearance' => \App\Http\Middleware\ClearanceMiddleware::class,
         'images_permission' => \App\Http\Middleware\CheckImagesPermission::class,
+        'album_permission' => \App\Http\Middleware\CheckAlbumPermission::class,
     ];
 }

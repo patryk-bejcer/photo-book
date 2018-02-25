@@ -50071,7 +50071,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var app = this;
         var id = app.$route.params.id;
-        app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/1/images/';
+        app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/' + this.author_id + '/images/';
         app.imageId = id;
         axios.get('http://localhost/gallery-portal/public/api/v1/images/' + id).then(function (resp) {
             app.image = resp.data;
@@ -50132,7 +50132,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.checkIfAuthor()
     ? _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-5 no-padding" }, [
+        _c("div", { staticClass: "col-md-4 no-padding" }, [
           _c(
             "form",
             {
@@ -50351,7 +50351,69 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 form-group" }, [
+                  _c("fieldset", { staticClass: "form-group mb-0" }, [
+                    _c("h6", [_vm._v("Dostępność:")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("label", { staticClass: "form-check-label" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.image.visible_level,
+                              expression: "image.visible_level"
+                            }
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "radio", value: "0", checked: "" },
+                          domProps: {
+                            checked: _vm._q(_vm.image.visible_level, "0")
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.$set(_vm.image, "visible_level", "0")
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n                                            Wszyscy użytkownicy\n                                        "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("label", { staticClass: "form-check-label" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.image.visible_level,
+                              expression: "image.visible_level"
+                            }
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "radio", value: "1" },
+                          domProps: {
+                            checked: _vm._q(_vm.image.visible_level, "1")
+                          },
+                          on: {
+                            change: function($event) {
+                              _vm.$set(_vm.image, "visible_level", "1")
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n                                            Zarejestrowani użytkownicy\n                                        "
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-12 form-group" }, [
@@ -50417,12 +50479,12 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _vm._m(0)
             ]
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "col-md-8" }, [
           _c(
             "div",
             { staticClass: "form-group mb-0" },
@@ -50451,53 +50513,6 @@ var render = function() {
     : _vm._e()
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12 form-group" }, [
-        _c("fieldset", { staticClass: "form-group mb-0" }, [
-          _c("h6", [_vm._v("Dostępność:")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("label", { staticClass: "form-check-label" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: {
-                  type: "radio",
-                  name: "optionsRadios",
-                  id: "optionsRadios1",
-                  value: "option1",
-                  checked: ""
-                }
-              }),
-              _vm._v(
-                "\n                                            Wszyscy użytkownicy\n                                        "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
-            _c("label", { staticClass: "form-check-label" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: {
-                  type: "radio",
-                  name: "optionsRadios",
-                  id: "optionsRadios2",
-                  value: "option2"
-                }
-              }),
-              _vm._v(
-                "\n                                            Zarejestrowani użytkownicy\n                                        "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

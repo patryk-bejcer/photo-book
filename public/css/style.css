@@ -1,5 +1,62 @@
 /* Your custom styles */
 
+/* General and overide */
+a{
+  color: #338FA8;
+}
+
+a:hover{
+  color: #276D7F;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #E59F3B !important;
+  border-color: #E59F3B !important;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #C28936 !important;
+  border-color: #C28936 !important;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #338FA8 !important;
+  border-color: #338FA8 !important;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #276D7F !important;
+  border-color: #276D7F !important;
+}
+
+.badge-primary {
+  background: #338FA8;
+  padding-top: 2px;
+  padding-bottom: 4px;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #338FA8;
+  border-color: #338FA8;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #338FA8;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
 .upload-input{
   padding:10px;
 }

@@ -16,7 +16,12 @@ use Intervention\Image\Facades\Image;
 class AlbumsController extends Controller
 {
 
-    /**
+	public function __construct() {
+		$this->middleware('album_permission', ['except' => ['show']]);
+	}
+
+
+	/**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -154,8 +159,11 @@ class AlbumsController extends Controller
      */
     public function edit($id)
     {
+
 	    $user = User::findOrFail($id);
-	    return view('albums.edit', compact('user'));
+
+	    return view( 'albums.edit', compact( 'user' ) );
+
     }
 
     /**
@@ -176,8 +184,12 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $album_id)
     {
-        //
+        if(Album::findOrFail($album_id)->delete()){
+	        Session::flash('message-remove-album', "Album zostal usunięty.");
+        }
+
+	    return redirect('/users/' . $user_id . '/albums');
     }
 }

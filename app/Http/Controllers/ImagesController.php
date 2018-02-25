@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\File\File;
 class ImagesController extends Controller
 {
 
+	public function __construct() {
+		$this->middleware('images_permission', ['except' => ['show', 'prevImage', 'nextImage']]);
+	}
 
     /**
      * Show the form for uploads a new images.

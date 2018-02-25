@@ -11,10 +11,18 @@
         <div class="alert alert-info">{{ Session::get('message') }}</div>
     @endif
 
+    @if (Session::has('message-remove-album'))
+        <div class="alert alert-danger">{{ Session::get('message-remove-album') }}</div>
+    @endif
+
     <div class="row mb-4" style="padding: 0 15px;">
-        @foreach($user->albums as $album)
-            @include('layouts.includes.album')
-        @endforeach
+        @if($user->albums->count() == 0)
+            <h4>Użytkownik nie dodał jescze żadnego albumu</h4>
+        @else
+            @foreach($user->albums as $album)
+                @include('layouts.includes.album')
+            @endforeach
+        @endif
     </div>
 
 @endsection

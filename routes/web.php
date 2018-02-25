@@ -71,6 +71,8 @@ Route::get('users/{user}/album/{album}images/{image}/next','ImagesController@nex
 Route::get('users/{user}/album/{album}images/{image}/prev','ImagesController@prevAlbumImage')->where('image', '[0-9]+');
 /* Show single album of user */
 Route::get('users/{user}/albums/{album}/','AlbumsController@show')->where('album', '[0-9]+');
+/* Destroy single album of user */
+Route::delete('users/{user}/albums/{album}/','AlbumsController@destroy')->where('album', '[0-9]+');
 /* Get create album form */
 Route::get('users/{user}/albums/create','AlbumsController@create');
 /* Save create album form to database */

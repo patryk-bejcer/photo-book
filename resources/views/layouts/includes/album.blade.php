@@ -3,7 +3,7 @@
         <div class="view overlay hm-blue-light">
             <img title="{{$album->title}}" class="img-fluid" src="{{url('storage/users') . '/' . $user->id . '/images/' . $album->primary_image }}" alt="">
             <div class="mask flex-center">
-                <h5 class="white-text">{{$album->title}}</h5>
+                <h5 class="white-text text-center mt-2">{{$album->title}}</h5>
             </div>
         </div>
     </a>

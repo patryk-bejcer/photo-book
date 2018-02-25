@@ -2,25 +2,30 @@
 
 namespace App\Http\Middleware;
 
+use App\Images;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class CheckImagesPermission
-{
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
+class CheckImagesPermission {
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @param  \Closure $next
+	 *
+	 * @return mixed
+	 */
+	public function handle( $request, Closure $next ) {
+		$image_exists = Images::where( [
+			'id'      => $request->image,
+			'user_id' => Auth::id(),
+		] )->exists();
 
-        if ( ! Auth::check() ) {
-            abort(403, 'Brak dostępu');
-        }
 
-        return $next($request);
-    }
+		if ( ! Auth::check() || ! $image_exists && ! is_admin() && $request->user != Auth::id() ) {
+			abort( 403, 'Brak dostępu' );
+		}
+
+		return $next( $request );
+	}
 }

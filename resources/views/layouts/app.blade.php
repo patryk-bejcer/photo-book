@@ -40,6 +40,8 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+
+
                         <li><a class="nav-link" href="{{ url('/') }}">Home</a></li>
 
 
@@ -54,17 +56,21 @@
                             <li><a style="margin-top: 6px; margin-left:4px; margin-right:4px;" href="{{url('/users/' . Auth::user()->id . '/images/upload')}}"  class="btn btn-success btn-sm" href="">Dodaj zdjęcia</a></li>
                             <li><a style="margin-top: 6px; margin-left:4px; margin-right:4px;" href="{{url('/users/' . Auth::user()->id . '/albums/create')}}"  class="btn btn-secondary btn-sm" href="">Dodaj album</a></li>
 
+                            <div class="pull-left" style="margin-top: 6px; margin-right: 5px;">
+                                <a href="{{ url('/users/' . Auth::id() )}}">
+                                    <img alt="Profil" title="Profil" style="padding:1px; width:32px; height: 32px; border-radius: 50px; margin-left:5px;" class="img-responsive img-circle img-thumbnail" src="http://voice4thought.org/wp-content/uploads/2016/08/default2-1.jpg" alt="">
+                                </a>
+                            </div>
 
 
-                            <li class="nav-item dropdown">
-
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                            <li class="dropdown pull-right">
+                                <a href="#" class="dropdown-toggle mt-4" style="    margin-top: 7px !important; position: absolute;" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                    <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{url('/users/' . Auth::id() )}}">
-                                        Profil
+                                        {{Auth::user()->name}}
                                     </a>
                                     <a class="dropdown-item" href="{{url('/users/' . Auth::id() . '/images' )}}">
                                         Zdjęcia
