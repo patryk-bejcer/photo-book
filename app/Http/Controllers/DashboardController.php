@@ -22,6 +22,6 @@ class DashboardController extends Controller
 		$usersCount = User::all()->count();
 		$commentsCount = Comment::all()->count();
 
-    	return view('dashboard', compact('imagesCount', 'albumsCount', 'usersCount', 'commentsCount'));
+    	return view('admin.dashboard', compact('imagesCount', 'albumsCount', 'usersCount', 'commentsCount'));
     }
 }
