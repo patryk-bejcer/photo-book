@@ -5,6 +5,9 @@ namespace App;
 use Ghanem\Rating\Traits\Ratingable as Rating;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed views
+ */
 class Images extends Model
 {
 

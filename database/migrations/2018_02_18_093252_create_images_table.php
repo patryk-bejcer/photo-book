@@ -22,8 +22,8 @@ class CreateImagesTable extends Migration
             $table->string('path');
             $table->boolean('comments')->nullable();
 	        $table->boolean('rating')->nullable();
-            $table->string('visible_level');
-	        $table->string('permission');
+            $table->integer('visible_level');
+	        $table->integer('permission');
 	        $table->integer('views')->nullable();
             $table->timestamps();
         });

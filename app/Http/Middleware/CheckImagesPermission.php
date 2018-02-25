@@ -16,13 +16,14 @@ class CheckImagesPermission {
 	 * @return mixed
 	 */
 	public function handle( $request, Closure $next ) {
+
 		$image_exists = Images::where( [
 			'id'      => $request->image,
 			'user_id' => Auth::id(),
 		] )->exists();
 
 
-		if ( ! Auth::check() || ! $image_exists && ! is_admin() && $request->user != Auth::id() ) {
+		if ( ! Auth::check() || ! $image_exists && ! is_admin()  && $request->user->id != Auth::id() ) {
 			abort( 401, 'Brak dostępu' );
 		}
 

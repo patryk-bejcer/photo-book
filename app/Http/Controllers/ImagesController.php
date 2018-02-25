@@ -4,175 +4,161 @@ namespace App\Http\Controllers;
 
 use App\Images;
 use App\User;
-use Ghanem\Rating\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 class ImagesController extends Controller
 {
 
 	public function __construct() {
-		$this->middleware('images_permission', ['except' => ['show', 'prevImage', 'nextImage']]);
+		$this->middleware('auth', ['except' => ['show', 'prevImage', 'nextImage']]);
+		$this->middleware('images_permission', ['except' => ['show', 'prevImage', 'nextImage', 'rate', 'store']]);
 	}
 
-    /**
-     * Show the form for uploads a new images.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create($id)
+    public function create(User $user)
     {
-    	$user = User::findOrFail($id);
         return view('images.create', compact('user'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request, $id)
     {
 
+    	//Set images variable
+    	$images = $request->images;
+
+    	// Create single user images directory if is not exist (image intervention Image class no create automatic dir)
         Storage::makeDirectory('public/users/' . Auth::id() . '/images');
 
+        // If post has images array start foreach
 	    if($request->file('images')) {
 
-		    foreach ($request->images as $imagee) {
+	    	//Loop on all images from POST form
+		    foreach ($images as $image) {
 
-                $image = Image::make($imagee)->encode('jpg', 85)->orientate()->fit(1600,1400);
+		    	//images directory to save (single user images catalog)
+		    	$imagesDIR = 'storage/users/' . Auth::id() . '/images/';
+		    	// hashed image name
+		    	$hashImgName = pathinfo($image->hashName(), PATHINFO_FILENAME).'.'.$image->getClientOriginalExtension();
 
-                $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
-                $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
+		    	// set created img name (this name set in database)
+			    $imgName = $hashImgName;
 
-                $image->orientate()->fit(360,360);
-                $thumbnail_image_name = pathinfo($imagee->hashName(), PATHINFO_FILENAME).'.'.$imagee->getClientOriginalExtension();
-                $image->save(public_path('storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name));
+			    //make and save image (full size version) by intervention img.
+                Image::make($image)
+                     ->encode('jpg', 85)
+                     ->orientate()
+                     ->fit(1600,1400)
+                     ->orientate()
+	                 ->save(public_path($imagesDIR . $imgName));
 
+			    // set created thumbnail name
+                $thumbName = 'thumb-' . $hashImgName;
+			    //make and save image (full size version) by intervention img.
+			    Image::make($image)
+			         ->encode('jpg', 85)
+			         ->orientate()
+			         ->fit(360,360)
+			         ->save(public_path($imagesDIR . $thumbName));
 
-                $this->storeToDB($thumbnail_image_name);
+			    // create image record in database
+                $this->storeToDB($imgName);
 
 		    }
 
-	    }
+		    // If all okay set message by session
+		    Session::flash('message', "Dodawanie zdjęć zakończyło się pomyślnie.");
 
-        Session::flash('message', "Dodawanie zdjęć zakończyło się pomyślnie.");
+	    } else {
+
+		    // If something went wrong send message with bad content
+		    Session::flash('message', "Podczas dodawania zdjęć wystąpił błąd");
+
+	    }
         return redirect()->route('user-images', ['id' => Auth::id()]);
     }
 
-    public function storeToDB($filename){
+    //Save single image to database
+    private function storeToDB($filename){
         Images::create([
             'user_id' => Auth::id(),
             'path' =>  $filename,
-            'visible_level' => 'publish',
-            'permission' => 'all',
+            'visible_level' => 0,
+            'permission' => 0,
             'comments' => true,
             'rating' => true,
 	        'views' => 0
         ]);
     }
 
-	public function nextImage($user_id, $image_id){
-
-		$user = User::findOrFail($user_id);
-
-		if(!$image = Images::where('id', '>', $image_id)->where('user_id', '=',  $user_id)->first()){
-
-			$image = Images::where('user_id', '=',  $user_id)->first();
-
+	public function nextImage(User $user, $image_id)
+	{
+		if(!$image = Images::where('id', '>', $image_id)->where('user_id', '=',  $user->id)->first()){
+			$image = Images::where('user_id', '=',  $user->id)->first();
 		}
-		$image->update(['views' => $image->views+1]);
+
+		$this->incrementStatistics($image);
+
 		return view('images.single', compact('image', 'user'));
 	}
 
 
-	public function prevImage($user_id, $image_id){
-
-		$user = User::findOrFail($user_id);
-
-		if(!$image = Images::where('id', '<', $image_id)->where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first()){
-			$image = Images::where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first();
+	public function prevImage(User $user, $image_id)
+	{
+		if(!$image = Images::where('id', '<', $image_id)->where('user_id', '=',  $user->id )->orderBy('id', 'desc')->first()){
+			$image = Images::where('user_id', '=',  $user->id )->orderBy('id', 'desc')->first();
 		}
-		$image->update(['views' => $image->views+1]);
+
+		$this->incrementStatistics($image);
+
 		return view('images.single', compact('image', 'user'));
 	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($user_id, $image_id)
+
+    public function show(User $user, Images $image)
     {
-
-    	if(Auth::check()){
-    		$user_rate = Rating::where(['']);
-	    }
-
-    	$user = User::findOrFail($user_id);
-        $image = Images::findOrFail($image_id);
-        $image->update(['views' => $image->views+1]);
-
+	    $this->incrementStatistics($image);
         return view('images.single', compact('image', 'user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+//    public function edit($id)
+//    {
+//        //
+//    }
+//
+//    public function update(Request $request, $id)
+//    {
+//        //
+//    }
+
+    public function destroy($user_id, Images $image)
     {
-        //
+	    try {
+		    $image->delete();
+	    } catch ( \Exception $e ) {
+	    }
+
+	    return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function rate(Images $image)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($user_id, $image_id)
-    {
-        $image = Images::findOrFail($image_id);
-        $image->delete();
-        return back();
-    }
-
-
-    public function rate($image_id){
-
     	$value = Input::get('rate_value');
-	    $user = Auth::user();
-	    $image = Images::findOrFail($image_id);
-	    $rating = $image->rating([
+
+	    $image->rating([
 		    'rating' => $value
-	    ], $user);
+	    ], Auth::user());
 
 		return back();
+    }
 
+    private function incrementStatistics(Images $image)
+    {
+	    $image->update(['views' => $image->views+1]);
     }
 
 }

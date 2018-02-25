@@ -108,8 +108,8 @@ class AlbumsController extends Controller
             'alt' => '',
             'description' => '',
             'primary_image' =>  $filename,
-            'visible_level' => 'publish',
-            'permission' => 'all',
+            'visible_level' => 0,
+            'permission' => 0,
 	        'views' => 0
         ]);
 
@@ -120,8 +120,8 @@ class AlbumsController extends Controller
 		$image = Images::create([
 			'user_id' => Auth::id(),
 			'path' =>  $filename,
-			'visible_level' => 'publish',
-			'permission' => 'all',
+			'visible_level' => 0,
+			'permission' => 0,
 			'comments' => true,
 			'rating' => true,
 			'views' => 0
