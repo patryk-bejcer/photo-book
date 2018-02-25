@@ -150,9 +150,11 @@ class ImagesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $image_id)
     {
-        //
+        $image = Images::findOrFail($image_id);
+        $image->delete();
+        return back();
     }
 
 

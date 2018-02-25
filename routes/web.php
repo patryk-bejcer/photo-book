@@ -33,6 +33,8 @@ Route::resource('users','UsersController');
 Route::get('admin','DashboardController@index')->name('dashboard');
 /* Get admin user resource  */
 Route::resource('admin/users', 'UsersBackendController');
+/* Get admin user images page  */
+Route::get('admin/users/{user}/images', 'UsersBackendController@images');
 /* Get admin roles resource  */
 Route::resource('admin/roles', 'RolesController');
 /* Get admin permissions resource  */
@@ -51,6 +53,8 @@ Route::get('users/{user}/images/upload','ImagesController@create');
 Route::post('users/{user}/images/upload','ImagesController@store');
 /* Show single user image */
 Route::get('users/{user}/images/{image}/','ImagesController@show')->where('image', '[0-9]+');
+/* Destroy single image of user */
+Route::delete('users/{user}/images/{image}/','ImagesController@destroy')->where('album', '[0-9]+');
 /* Show next image of a given user */
 Route::get('users/{user}/images/{image}/next','ImagesController@nextImage')->where('image', '[0-9]+');
 /* Show previous image of a given user */

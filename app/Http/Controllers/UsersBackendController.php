@@ -143,4 +143,10 @@ class UsersBackendController extends Controller {
 		                 ->with('flash_message',
 			                 'User successfully deleted.');
 	}
+
+	public function images($id) {
+		$user = User::findOrFail($id);
+		return view('admin.users.images.index', compact('user'));
+	}
+
 }

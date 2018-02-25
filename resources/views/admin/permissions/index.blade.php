@@ -5,18 +5,18 @@
 @section('content')
 
     <div class="col-lg-7 col-lg-offset-1">
-        <h1><i class="fa fa-key"></i>Available Permissions
+        <h1><i class="fa fa-key"></i>Uprawnienia
 
-            <a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
-            <a href="{{ route('roles.index') }}" class="btn btn-default pull-right">Roles</a></h1>
+            <a href="{{ route('users.index') }}" class="btn btn-default pull-right">Użytkownicy</a>
+            <a href="{{ route('roles.index') }}" class="btn btn-default pull-right">Role</a></h1>
         <hr>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
 
                 <thead>
                 <tr>
-                    <th>Permissions</th>
-                    <th>Operation</th>
+                    <th>Uprawnienia</th>
+                    <th>Operacje</th>
                 </tr>
                 </thead>
                 <tbody>
