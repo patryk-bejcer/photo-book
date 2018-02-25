@@ -35,4 +35,6 @@
 
     </div>
 
+    <p class="pull-right"><small>Liczba wyświetleń: {{$album->views}}</small></p>
+
 @endsection

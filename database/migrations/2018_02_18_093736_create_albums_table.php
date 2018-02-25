@@ -22,6 +22,7 @@ class CreateAlbumsTable extends Migration
 	        $table->string('visible_level');
 	        $table->string('permission');
 	        $table->string('primary_image');
+	        $table->bigInteger('views')->unsigned()->nullable();
             $table->timestamps();
         });
     }

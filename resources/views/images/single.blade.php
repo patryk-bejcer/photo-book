@@ -48,6 +48,7 @@
     @elseif($image->permission == 1)
         <p><small>* Autor wyraża zgodę na rozpowszechnianie</small></p>
     @endif
+        <p class="pull-right" style="margin-top:-2.5em"><small>Liczba wyświetleń: {{$image->views}}</small></p>
     </div>
 
 @endsection

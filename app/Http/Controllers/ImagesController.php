@@ -76,6 +76,7 @@ class ImagesController extends Controller
             'permission' => 'all',
             'comments' => true,
             'rating' => true,
+	        'views' => 0
         ]);
     }
 
@@ -88,6 +89,7 @@ class ImagesController extends Controller
 			$image = Images::where('user_id', '=',  $user_id)->first();
 
 		}
+		$image->update(['views' => $image->views+1]);
 		return view('images.single', compact('image', 'user'));
 	}
 
@@ -99,6 +101,7 @@ class ImagesController extends Controller
 		if(!$image = Images::where('id', '<', $image_id)->where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first()){
 			$image = Images::where('user_id', '=',  $user_id)->orderBy('id', 'desc')->first();
 		}
+		$image->update(['views' => $image->views+1]);
 		return view('images.single', compact('image', 'user'));
 	}
 
@@ -117,6 +120,7 @@ class ImagesController extends Controller
 
     	$user = User::findOrFail($user_id);
         $image = Images::findOrFail($image_id);
+        $image->update(['views' => $image->views+1]);
 
         return view('images.single', compact('image', 'user'));
     }

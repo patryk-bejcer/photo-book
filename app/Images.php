@@ -10,7 +10,7 @@ class Images extends Model
 
 	use Rating;
 
-   protected $fillable = [ 'user_id', 'alt', 'title', 'description', 'path', 'visible_level', 'permission' , 'comments', 'rating'];
+   protected $fillable = [ 'user_id', 'alt', 'title', 'description', 'path', 'visible_level', 'permission' , 'comments', 'rating', 'views'];
 
    public function user(){
 	   return $this->hasOne('App\User', 'id', 'user_id');

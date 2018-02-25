@@ -44,7 +44,7 @@ class AlbumsController extends Controller
 	    $request->validate([
 		    'name' => 'required|max:55|min:3',
 		    'primary_image' => 'required',
-		    'images'  => 'required'
+//		    'images'  => 'required'
 	    ],[
 		    'required' => 'To pole jest wymagane',
 		    'min' => 'Pole musi mieć minimum :min znaków',
@@ -110,6 +110,7 @@ class AlbumsController extends Controller
             'primary_image' =>  $filename,
             'visible_level' => 'publish',
             'permission' => 'all',
+	        'views' => 0
         ]);
 
         return $album;
@@ -123,6 +124,7 @@ class AlbumsController extends Controller
 			'permission' => 'all',
 			'comments' => true,
 			'rating' => true,
+			'views' => 0
 		]);
 
 		return $image;
@@ -143,10 +145,11 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user, $album)
+    public function show($user, $album_id)
     {
     	$user = User::findOrFail($user);
-    	$album = Album::findOrFail($album);
+    	$album = Album::findOrFail($album_id);
+	    $album->update(['views' => $album->views+1]);
 
         return view('albums.single', compact('album', 'user'));
     }

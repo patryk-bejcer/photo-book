@@ -283,3 +283,8 @@ img{
   padding-top: 10px;
   letter-spacing: 1px;
 }
+
+.star-rating span:hover{
+  cursor: pointer;
+  color: gold;
+}

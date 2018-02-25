@@ -24,11 +24,11 @@
 
     @if(!getUserRateImage($image->id))
         <div class="star-rating">
-            <span class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-1').submit();"></span>
-            <span class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-2').submit();"></span>
-            <span class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-3').submit();"></span>
-            <span class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-4').submit();"></span>
-            <span class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-5').submit();"></span>
+            <span title="Oceń na 1" class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-1').submit();"></span>
+            <span title="Oceń na 2" class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-2').submit();"></span>
+            <span title="Oceń na 3" class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-3').submit();"></span>
+            <span title="Oceń na 4" class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-4').submit();"></span>
+            <span title="Oceń na 5" class="fa fa-star-o" onclick="event.preventDefault(); document.getElementById('rate-form-5').submit();"></span>
             <input type="hidden" name="whatever1" class="rating-value" value="2.56">
         </div>
     @else
