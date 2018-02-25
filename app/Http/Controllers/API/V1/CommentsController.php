@@ -8,6 +8,12 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
+
+	public function __construct()
+	{
+//        $this->middleware('auth');
+	}
+
     public function store(Request $request)
     {
 //    	var_dump($request);

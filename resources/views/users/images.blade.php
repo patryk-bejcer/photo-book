@@ -20,15 +20,9 @@
                 'author_id' => $user->id,
             ]); ?>
         </script>
+
         <router-view :user="{{$user->id}}" name="imagesIndex"></router-view>
         <router-view></router-view>
-        {{--<ul id="gallery" class="list-unstyled row">--}}
-        {{--@foreach($user->images as $image)--}}
-        {{--@include('layouts.includes.image')--}}
-        {{--@endforeach--}}
-        {{--</ul>--}}
-        {{--@foreach($user->images as $image)--}}
-        {{--@include('layouts.includes.image-right-sidebar')--}}
-        {{--@endforeach--}}
+
     </div>
 @endsection

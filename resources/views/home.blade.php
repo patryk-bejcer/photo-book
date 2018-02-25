@@ -28,11 +28,6 @@
 
             </ul>
 
-                @foreach($images as $image)
-
-                    @include('layouts.includes.image-right-sidebar')
-
-                @endforeach
 
     </div>
 

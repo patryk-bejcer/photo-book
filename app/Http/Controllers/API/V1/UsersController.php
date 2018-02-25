@@ -14,7 +14,7 @@ class UsersController extends Controller
         return $images;
     }
 
-	public function userAalbums($id){
+	public function userAlbums($id){
 		$albums = User::findOrFail($id)->albums;
 		return $albums;
 	}

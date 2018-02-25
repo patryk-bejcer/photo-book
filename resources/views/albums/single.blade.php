@@ -25,15 +25,14 @@
 
     <div class="row justify-content-center " style="padding: 0 30px;">
 
+
+
         <ul id="gallery" class="list-unstyled row">
             @foreach($album->images as $image)
                 @include('layouts.includes.image')
             @endforeach
         </ul>
 
-        @foreach($album->images as $image)
-            @include('layouts.includes.image-right-sidebar')
-        @endforeach
     </div>
 
 @endsection
