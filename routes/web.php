@@ -30,7 +30,7 @@ Route::resource('users','UsersController');
 /* ===================== */
 
 /* Get admin dashboard */
-Route::get('admin', function () { return view('dashboard'); })->middleware('isAdmin');
+Route::get('admin','DashboardController@index')->name('dashboard');
 /* Get admin user resource  */
 Route::resource('admin/users', 'UsersBackendController');
 /* Get admin roles resource  */

@@ -23,7 +23,7 @@ class CheckImagesPermission {
 
 
 		if ( ! Auth::check() || ! $image_exists && ! is_admin() && $request->user != Auth::id() ) {
-			abort( 403, 'Brak dostępu' );
+			abort( 401, 'Brak dostępu' );
 		}
 
 		return $next( $request );
