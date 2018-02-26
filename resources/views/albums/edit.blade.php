@@ -56,7 +56,7 @@
 
                 </div>
 
-                <p class="mb-1">Obecne zdjęcie:</p>
+                <p class="mb-1">Obecne zdjęcie: </p>
                 <img  style="max-width:150px;" class="img-fluid" src="{{url('storage/users') . '/' . $album->user_id . '/images/' . $album->primary_image }}" alt="">
 
             </div>
