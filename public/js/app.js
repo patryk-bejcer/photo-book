@@ -50573,7 +50573,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             comment: {
                 user_id: window.Laravel.user_id,
                 image_id: window.Laravel.image_id,
-                album_id: '1',
                 type: 'image',
                 body: ''
             },

@@ -17,28 +17,32 @@
 
     <hr>
 
-    <form action="{{url('/users/' . $user->id . '/albums/create')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{url('/users/' . $user->id . '/albums/' . $album->id)}}" method="POST" enctype="multipart/form-data">
 
         {{ csrf_field() }}
+        {{ method_field('PATCH') }}
 
 
         <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
-                    <label for="">Nazwa albumu </label>
-                    <input type="text" name="name" id="name" placeholder="Nazwa albumu">
+            <div class="col-sm-5 col-sm-offset-1">
+                <div class="form-group mt-2">
+                    <label for="name" {{ $errors->has('name') ? ' data-error=wrong' : '' }} >Tytuł twojego
+                        albumu </label>
+                    <input type="text" name="name" id="name"
+                           class="form-control {{ $errors->has('name') ? ' validate invalid' : '' }}"
+                           value="{{$album->title}}" placeholder="Tutaj podaj nazwę albumu">
 
-                    @if ($errors->has('primaryImage'))
+                    @if ($errors->has('name'))
                         <span class="help-block">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
+                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                </span>
                     @endif
 
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
                     <label for="">Wybierz zdjęcie głowne albumu </label>
@@ -51,14 +55,32 @@
                     @endif
 
                 </div>
+
+                <p class="mb-1">Obecne zdjęcie:</p>
+                <img  style="max-width:150px;" class="img-fluid" src="{{url('storage/users') . '/' . $album->user_id . '/images/' . $album->primary_image }}" alt="">
+
             </div>
+
         </div>
 
-        <h4>Zdjęcia w tym albumie</h4><small>(zaznacz zdjęcia które chesz aby zostały usunięte)</small>
-        <br><br>
-        <div class="row remove-images" style="padding:0 10px;">
 
-            @foreach(Auth::user()->images as $image)
+        <div class="mb-3">
+            <a style="margin-left: -1px;" class="btn btn-danger" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                Usuń zdjęcia z albumu
+            </a>
+        </div>
+
+        <div class="collapse" id="collapseExample2">
+            <div class="mt-3">
+
+                <div class="row">
+                    <h4>Zdjęcia w tym albumie</h4><small>(zaznacz zdjęcia które chesz aby zostały usunięte)</small>
+                </div>
+
+                <div class="row remove-images" style="padding:0 10px;">
+
+
+            @foreach($album->images as $image)
 
                 <div class="col-md-2 no-padding" style="padding:2px;">
 
@@ -73,6 +95,9 @@
         </div>
 
 
+            </div></div>
+
+
 
 
 
@@ -80,9 +105,9 @@
 
             <div class="col-sm-12 col-sm-offset-1">
 
-                <div>
+                <div class="mb-3">
                     <a style="margin-left: -1px;" class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Kliknij aby wykorzystać już wcześniej dodane zdjęcia
+                        Dodaj przesłane już zdjęcia
                     </a>
                 </div>
 
@@ -131,6 +156,8 @@
         <div class="row mt-4" style="margin-left: -1px">
             <input style="margin-left: -1px"  type="submit" value="Zapisz album" class="btn btn-secondary pull-right">
         </div>
+
+
 
     </form>
 

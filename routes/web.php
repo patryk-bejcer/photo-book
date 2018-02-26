@@ -83,6 +83,8 @@ Route::get('users/{user}/albums/create','AlbumsController@create');
 Route::post('users/{user}/albums/create','AlbumsController@store');
 /* Edit single album of user */
 Route::get('users/{user}/albums/{album}/edit','AlbumsController@edit')->where('album', '[0-9]+');
+/* Update single album of user */
+Route::patch('users/{user}/albums/{album}','AlbumsController@update')->where('album', '[0-9]+');
 
 /* ===================== */
 /* === Comments routes === */

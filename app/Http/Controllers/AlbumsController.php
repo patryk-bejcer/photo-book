@@ -160,13 +160,9 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user, Album $album)
     {
-
-	    $user = User::findOrFail($id);
-
-	    return view( 'albums.edit', compact( 'user' ) );
-
+	    return view( 'albums.edit', compact( 'user', 'album' ) );
     }
 
     /**
@@ -178,7 +174,7 @@ class AlbumsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo 'update';
     }
 
     /**
