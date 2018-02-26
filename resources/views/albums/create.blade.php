@@ -32,6 +32,24 @@
 
         <div class="row">
             <div class="col-sm-5 col-sm-offset-1">
+                <div class="form-group mt-0">
+                    <label for="name" {{ $errors->has('name') ? ' data-error=wrong' : '' }} >Opis albumu </label>
+                    <textarea name="description" id="description"
+                           class="form-control {{ $errors->has('description') ? ' validate invalid' : '' }}"
+                              value="{{ old('name') }}" placeholder="Tutaj wpisz opis albumu"></textarea>
+
+                    @if ($errors->has('description'))
+                        <span class="help-block">
+                    <small class="text-danger">{{ $errors->first('description') }}</small>
+                </span>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-5 col-sm-offset-1">
                 <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
                     <label for="">Wybierz zdjęcie głowne albumu </label>
                     <input name="primary_image" type="file" class="form-control upload-input mb-1"

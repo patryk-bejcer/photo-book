@@ -42,8 +42,9 @@ class AlbumsController extends Controller
     {
 
 	    $request->validate([
-		    'name' => 'required|max:55|min:3',
+		    'name' => 'required|max:55|min:3|max:25',
 		    'primary_image' => 'required',
+		    'description' => 'required|min:5|max:255',
 //		    'images'  => 'required'
 	    ],[
 		    'required' => 'To pole jest wymagane',
@@ -55,15 +56,18 @@ class AlbumsController extends Controller
 
             Storage::makeDirectory('public/users/' . Auth::id() . '/images');
 
-            $primaryImg = $request->primary_image;
+            if($request->primary_image){
 
-            $image = Image::make($primaryImg)->encode('jpg', 85)->fit(320,320);
+            	$primaryImg = $request->primary_image;
 
-            $thumbnail_image_name = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
-            $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
+	            $image = Image::make($primaryImg)->encode('jpg', 85)->fit(320,320);
 
-            $insertAlbum = $this->storePrimaryToDB($thumbnail_image_name, $request);
+	            $thumbnail_image_name = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
+	            $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
+	            $insertAlbum = $this->storePrimaryToDB($thumbnail_image_name, $request);
+
+            }
         }
 
 	    if($request->file('images')) {
@@ -106,7 +110,7 @@ class AlbumsController extends Controller
             'user_id' => Auth::id(),
             'title' => $request->name,
             'alt' => '',
-            'description' => '',
+            'description' => $request->description,
             'primary_image' =>  $filename,
             'visible_level' => 0,
             'permission' => 0,
@@ -172,9 +176,61 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user, $id)
     {
-        echo 'update';
+    	$album = Album::findOrFail($id);
+
+	    $request->validate([
+//		    'name' => 'required|max:55|min:3|max:25',
+//		    'primary_image' => 'required',
+//		    'description' => 'required|min:5|max:255',
+//		    'images'  => 'required'
+	    ],[
+		    'required' => 'To pole jest wymagane',
+		    'min' => 'Pole musi mieć minimum :min znaków',
+		    'max' => 'Pole może mieć maksymalnie :max znaków'
+	    ]);
+
+	    if($request->primary_image){
+
+		    $primaryImg = $request->primary_image;
+
+		    $image = Image::make($primaryImg)->encode('jpg', 85)->fit(320,320);
+
+		    $thumbnail_image_name = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
+		    $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
+
+	    }
+
+	    Album::where(['id' => $id])->update([
+		    'title' => $request->name,
+		    'description' => $request->description,
+//	        'primary_image' =>  $thumbnail_image_name,
+	    ]);
+
+	    if($request->remove_image)
+	    {
+		    foreach ( $request->remove_image as $image ) {
+				AlbumsImage::where('album_id', '=', $id)->orWhere('image_id' , '=', $image)->delete();
+		    }
+	    }
+
+		if($request->check_image) {
+			$checkedImages = $request->check_image;
+
+			foreach ( $checkedImages as $checkImage ) {
+				AlbumsImage::create( [
+					'album_id' => $id,
+					'image_id' => $checkImage,
+				] );
+			}
+		}
+
+
+
+	    Session::flash('message', "Album zaktualizowany.");
+	    return redirect()->route('user-albums', ['id' => Auth::id()]);
+
     }
 
     /**
