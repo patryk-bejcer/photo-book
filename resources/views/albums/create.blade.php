@@ -118,6 +118,32 @@
             </div>
         </div>
 
+        <div class="row mt-3" >
+            <div class="col-sm-12 col-sm-offset-1">
+                <label for="">Jeśli chcesz aby tylko wybrani użytkownicy widzieli ten album, zaznacz ich na poniższej liście
+                    <br> <small>(jeśli zostawisz wszystkie pola puste, album będzie domyślnie widoczny dla wszystkich)</small> </label>
+
+                @foreach($users as $user)
+
+                    @if( $user->hasRole('User') && $user->id != Auth::id())
+                        <div class="col-md-2 no-padding" style="padding:2px;">
+
+                            <label class="image-checkbox">
+                                <span>{{$user->name}}</span>
+                                <input type="checkbox" name="check_users[]" value="{{$user->id}}"
+                                       @if (!empty($album->access_users))
+                                       @if(in_array ( $user->id, json_decode($album->access_users))) checked @endif
+                                        @endif
+                                />
+                            </label>
+
+                        </div>
+                    @endif
+
+                @endforeach
+            </div>
+        </div>
+
         <div class="row mt-4" style="margin-left: -1px">
             <input style="margin-left: -1px" type="submit" value="Zapisz album" class="btn btn-secondary pull-right">
         </div>

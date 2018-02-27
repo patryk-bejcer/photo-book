@@ -26,10 +26,10 @@ class AlbumsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(User $user)
     {
-        $user = User::findOrFail($id);
-        return view('albums.create', compact('user'));
+        $users = User::all();
+        return view('albums.create', compact('user', 'users'));
     }
 
     /**
@@ -149,10 +149,18 @@ class AlbumsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user, $album_id)
+    public function show($user, Album $album)
     {
     	$user = User::findOrFail($user);
-    	$album = Album::findOrFail($album_id);
+
+    	if ($album->access_users != null && Auth::user()->hasRole('User'))
+    	{
+    		$accessUsers = json_decode($album->access_users);
+    		if(!in_array(Auth::id(), $accessUsers)){
+    			abort('401');
+		    }
+	    }
+
 	    $album->update(['views' => $album->views+1]);
 
         return view('albums.single', compact('album', 'user'));
@@ -166,7 +174,10 @@ class AlbumsController extends Controller
      */
     public function edit(User $user, Album $album)
     {
-	    return view( 'albums.edit', compact( 'user', 'album' ) );
+
+    	$users = User::all();
+
+	    return view( 'albums.edit', compact( 'user', 'album', 'users' ) );
     }
 
     /**
@@ -178,6 +189,7 @@ class AlbumsController extends Controller
      */
     public function update(Request $request, $user, $id)
     {
+
     	$album = Album::findOrFail($id);
 
 	    $request->validate([
@@ -202,10 +214,17 @@ class AlbumsController extends Controller
 
 	    }
 
+	    $checkedUsers = null;
+
+	    if($request->check_users) {
+		    $checkedUsers = json_encode( $request->check_users );
+	    }
+
 	    Album::where(['id' => $id])->update([
 		    'title' => $request->name,
 		    'description' => $request->description,
 //	        'primary_image' =>  $thumbnail_image_name,
+	        'access_users'  => $checkedUsers,
 	    ]);
 
 	    if($request->remove_image)
