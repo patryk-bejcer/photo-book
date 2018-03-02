@@ -20,7 +20,6 @@ class AlbumsController extends Controller
 		$this->middleware('album_permission', ['except' => ['show']]);
 	}
 
-
 	/**
      * Show the form for creating a new resource.
      *
@@ -41,6 +40,7 @@ class AlbumsController extends Controller
     public function store(Request $request)
     {
 
+        // Validate fields from albums.edit
 	    $request->validate([
 		    'name' => 'required|max:55|min:3|max:25',
 		    'primary_image' => 'required',
@@ -52,40 +52,65 @@ class AlbumsController extends Controller
 		    'max' => 'Pole może mieć maksymalnie :max znaków'
 	    ]);
 
+        //images directory to save (single user images catalog)
+        $imagesDIR = 'storage/users/' . Auth::id() . '/images/';
+
 	    if($request->file('primary_image')) {
 
             Storage::makeDirectory('public/users/' . Auth::id() . '/images');
 
-            if($request->primary_image){
+            $primaryImg = $request->primary_image;
 
-            	$primaryImg = $request->primary_image;
+            // hashed image name
+            $hashImgName = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
+            // set created img name (this name set in database)
+            $imgName = $hashImgName;
 
-	            $image = Image::make($primaryImg)->encode('jpg', 85)->fit(320,320);
+            //make and save image (full size version) by intervention img.
+            Image::make($primaryImg)
+                ->encode('jpg', 85)
+                ->orientate()
+                ->fit(320,320)
+                ->orientate()
+                ->save(public_path($imagesDIR . $imgName));
 
-	            $thumbnail_image_name = pathinfo($primaryImg->hashName(), PATHINFO_FILENAME).'.'.$primaryImg->getClientOriginalExtension();
-	            $image->save(public_path('storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name));
 
-	            $insertAlbum = $this->storePrimaryToDB($thumbnail_image_name, $request);
+            // Insert to DB
+            $insertAlbum = $this->storePrimaryToDB($imgName, $request);
 
-            }
         }
 
 	    if($request->file('images')) {
 
-		    foreach ( $request->images as $imagee ) {
+		    foreach ( $request->images as $image ) {
 
-			    $image = Image::make( $imagee )->encode( 'jpg', 85 );
+                // hashed image name
+                $hashImgName = pathinfo($image->hashName(), PATHINFO_FILENAME).'.'.$image->getClientOriginalExtension();
 
-			    $thumbnail_image_name = pathinfo( $imagee->hashName(), PATHINFO_FILENAME ) . '.' . $imagee->getClientOriginalExtension();
-			    $image->save( public_path( 'storage/users/' . Auth::id() . '/images/' . $thumbnail_image_name ) );
+                // set created img name (this name set in database)
+                $imgName = $hashImgName;
 
-			    $image->fit( 360, 360 );
-			    $thumbnail_image_name = pathinfo( $imagee->hashName(), PATHINFO_FILENAME ) . '.' . $imagee->getClientOriginalExtension();
-			    $image->save( public_path( 'storage/users/' . Auth::id() . '/images/thumb-' . $thumbnail_image_name ) );
+                //make and save image (full size version) by intervention img.
+                Image::make($image)
+                    ->encode('jpg', 85)
+                    ->orientate()
+                    ->fit(1600,1400)
+                    ->orientate()
+                    ->save(public_path($imagesDIR . $imgName));
 
+                // set created thumbnail name
+                $thumbName = 'thumb-' . $hashImgName;
+                //make and save image (thumb version) by intervention img.
+                Image::make($image)
+                    ->encode('jpg', 85)
+                    ->orientate()
+                    ->fit(360,360)
+                    ->save(public_path($imagesDIR . $thumbName));
 
-			    $insertImage = $this->storeImageToDB( $thumbnail_image_name );
+                //insert image to database
+                $insertImage = $this->storeImageToDB( $imgName );
 
+                // make row in pivot table album_image (relation)
 				$this->storeAlbumImageToDB($insertAlbum, $insertImage->id);
 
 		    }
@@ -95,16 +120,21 @@ class AlbumsController extends Controller
 
 		    $checkedImages = $request->input('check_image');
 
-		    foreach ($checkedImages as $checkImage){
+		    //store to databse checked existing images
+            foreach ($checkedImages as $checkImage){
 			    $this->storeAlbumImageToDB($insertAlbum, $checkImage);
 		    }
 	    }
 
+
+	    // Set session flash message this msg will display in albums page after save.
         Session::flash('message', "Dodano nowy album.");
         return redirect()->route('user-albums', ['id' => Auth::id()]);
 
     }
 
+
+    // Create new album in databse
     public function storePrimaryToDB($filename, Request $request){
         $album = Album::create([
             'user_id' => Auth::id(),
@@ -114,12 +144,14 @@ class AlbumsController extends Controller
             'primary_image' =>  $filename,
             'visible_level' => 0,
             'permission' => 0,
+	        'access_users' => json_encode( $request->check_users),
 	        'views' => 0
         ]);
 
         return $album;
     }
 
+    // Create new image in database
 	public function storeImageToDB($filename){
 		$image = Images::create([
 			'user_id' => Auth::id(),
@@ -134,13 +166,14 @@ class AlbumsController extends Controller
 		return $image;
 	}
 
+
+	// store relation album-image to database
 	public function storeAlbumImageToDB($insertAlbum, $insertImg){
 		AlbumsImage::create([
 			'album_id' => $insertAlbum->id,
 			'image_id' => $insertImg,
 		]);
 	}
-
 
 
     /**

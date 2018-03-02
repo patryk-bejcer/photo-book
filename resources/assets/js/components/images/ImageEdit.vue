@@ -83,6 +83,25 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <div class="col-sm-12 col-sm-offset-1">
+                                    <label>Jeśli chcesz aby tylko wybrani użytkownicy widzieli ten album, zaznacz ich na poniższej liście
+                                        <br> <small>(jeśli zostawisz wszystkie pola puste, album będzie domyślnie widoczny dla wszystkich)</small> </label>
+
+
+                                    <div class="col-md-8 no-padding" style="padding:2px;">
+
+                                        <label v-for="user in users" class="image-checkbox">
+                                            <span><small>{{user.name}}</small></span>
+                                            <input style="margin-right:6px;" type="checkbox" v-model="user.access_users"
+                                            />
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-12 form-group">
                                     <fieldset class="form-group mb-0">
@@ -124,6 +143,7 @@
         mounted() {
             let app = this;
             let id = app.$route.params.id;
+            app.users = window.Laravel.users;
             app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/' + this.author_id + '/images/';
             app.imageId = id;
             axios.get('http://localhost/gallery-portal/public/api/v1/images/' + id)
@@ -137,6 +157,7 @@
         },
         data: function () {
             return {
+                users: {},
                 imageId: null,
                 image: {
                     title: '',
@@ -146,13 +167,18 @@
                     visible_level: '',
                     permission: '',
                     comment: '',
-                    rating: ''
+                    rating: '',
+                    access_users: {}
                 },
                 imageFullPath: '',
                 user_id: window.Laravel.user_id,
-                author_id: window.Laravel.author_id
+                author_id: window.Laravel.author_id,
             }
         },
+        // mounted() {
+        //     this.users = window.Laravel.users;
+        //     console.log(window.Laravel.users);
+        // },
         methods: {
             checkIfAuthor(){
                 if(this.user_id == this.author_id){

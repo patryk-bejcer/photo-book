@@ -18,6 +18,7 @@
                 'csrt_token' => csrf_token(),
                 'user_id' => Auth::id(),
                 'author_id' => $user->id,
+                'users' => $users,
             ]); ?>
         </script>
 

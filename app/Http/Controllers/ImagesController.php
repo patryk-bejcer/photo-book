@@ -58,7 +58,7 @@ class ImagesController extends Controller
 
 			    // set created thumbnail name
                 $thumbName = 'thumb-' . $hashImgName;
-			    //make and save image (full size version) by intervention img.
+			    //make and save image (thumb version) by intervention img.
 			    Image::make($image)
 			         ->encode('jpg', 85)
 			         ->orientate()

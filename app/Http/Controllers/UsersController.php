@@ -16,7 +16,8 @@ class UsersController extends Controller
 
     public function userImages($id){
         $user = User::findOrFail($id);
-        return view('users.images', compact('user'));
+        $users = User::all();
+        return view('users.images', compact('user', 'users'));
     }
 
     public function userAlbums($id){

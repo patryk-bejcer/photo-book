@@ -50066,11 +50066,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         var app = this;
         var id = app.$route.params.id;
+        app.users = window.Laravel.users;
         app.imageFullPath = 'http://localhost/gallery-portal/public/storage/users/' + this.author_id + '/images/';
         app.imageId = id;
         axios.get('http://localhost/gallery-portal/public/api/v1/images/' + id).then(function (resp) {
@@ -50082,6 +50102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            users: {},
             imageId: null,
             image: {
                 title: '',
@@ -50091,13 +50112,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 visible_level: '',
                 permission: '',
                 comment: '',
-                rating: ''
+                rating: '',
+                access_users: {}
             },
             imageFullPath: '',
             user_id: window.Laravel.user_id,
             author_id: window.Laravel.author_id
         };
     },
+    // mounted() {
+    //     this.users = window.Laravel.users;
+    //     console.log(window.Laravel.users);
+    // },
     methods: {
         checkIfAuthor: function checkIfAuthor() {
             if (this.user_id == this.author_id) {
@@ -50415,6 +50441,65 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "row mb-3" }, [
+                _c("div", { staticClass: "col-sm-12 col-sm-offset-1" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-md-8 no-padding",
+                      staticStyle: { padding: "2px" }
+                    },
+                    _vm._l(_vm.users, function(user) {
+                      return _c("label", { staticClass: "image-checkbox" }, [
+                        _c("span", [_c("small", [_vm._v(_vm._s(user.name))])]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: user.access_users,
+                              expression: "user.access_users"
+                            }
+                          ],
+                          staticStyle: { "margin-right": "6px" },
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            checked: Array.isArray(user.access_users)
+                              ? _vm._i(user.access_users, null) > -1
+                              : user.access_users
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = user.access_users,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (user.access_users = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (user.access_users = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.$set(user, "access_users", $$c)
+                              }
+                            }
+                          }
+                        })
+                      ])
+                    })
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-12 form-group" }, [
                   _c("fieldset", { staticClass: "form-group mb-0" }, [
@@ -50479,7 +50564,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(1)
             ]
           )
         ]),
@@ -50513,6 +50598,23 @@ var render = function() {
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [
+      _vm._v(
+        "Jeśli chcesz aby tylko wybrani użytkownicy widzieli ten album, zaznacz ich na poniższej liście\n                                    "
+      ),
+      _c("br"),
+      _vm._v(" "),
+      _c("small", [
+        _vm._v(
+          "(jeśli zostawisz wszystkie pola puste, album będzie domyślnie widoczny dla wszystkich)"
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
