@@ -93,8 +93,7 @@
 
                                         <label v-for="user in users" class="image-checkbox">
                                             <span><small>{{user.name}}</small></span>
-                                            <input style="margin-right:6px;" type="checkbox" v-model="user.access_users"
-                                            />
+                                            <input  type="checkbox" v-model="image.access_users" :value="user.id" />
                                         </label>
 
                                     </div>
@@ -168,7 +167,7 @@
                     permission: '',
                     comment: '',
                     rating: '',
-                    access_users: {}
+                    access_users: []
                 },
                 imageFullPath: '',
                 user_id: window.Laravel.user_id,

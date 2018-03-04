@@ -18,13 +18,13 @@
     <a href="{{url('/users/' . $user->id . '/images' )}}"><h4>Zobacz wszystkie zdjęcia</h4></a>
     <hr>
 
-    <div class="row justify-content-center " style="padding: 0 30px;">
+    <div class="row" style="padding: 0 10px;">
 
-        <ul id="gallery" class="list-unstyled row">
+
             @foreach($user->lastImages as $image)
                 @include('layouts.includes.image')
             @endforeach
-        </ul>
+
 
     </div>
     @else

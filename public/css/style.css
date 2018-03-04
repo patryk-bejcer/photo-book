@@ -288,3 +288,90 @@ img{
   cursor: pointer;
   color: gold;
 }
+
+.next-btn{
+  top: 40%;
+  position: absolute;
+  right: -100px;
+  font-size: 36px;
+}
+
+.prev-btn{
+  top: 40%;
+  position: absolute;
+  left: -100px;
+  font-size: 36px;
+}
+
+.image-views{
+  margin-top:-2.5em;
+}
+
+.mobile-user-menu{
+  display: none;
+}
+
+.add-img-btn{
+  margin-top: 6px;
+  margin-left:4px;
+  margin-right:4px;
+}
+
+.add-album-btn{
+  margin-top: 6px;
+  margin-left:4px;
+  margin-right:4px;
+}
+
+@media (max-width: 576px) {
+
+  .select-exist-images img{
+    max-width:80px;
+  }
+
+  .select-exist-images .check-exist-img{
+    position: absolute;
+    top: 3px;
+    right: 16px;
+  }
+
+  .desktop-user-menu{
+    display: none;
+  }
+
+  .mobile-user-menu{
+    display: block;
+  }
+
+  .add-img-btn{
+    margin-left:0px;
+    margin-bottom: 5px;
+  }
+
+  .add-album-btn{
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+  
+  .next-btn{
+    top: 27%;
+    z-index: 100;
+    position: absolute;
+    right: 5px;
+    font-size: 36px;
+  }
+  .prev-btn{
+    top: 27%;
+    z-index: 100;
+    position: absolute;
+    left: 5px;
+    font-size: 36px;
+  }
+  .image-views{
+    margin-top:0em;
+  }
+  .img-permissions p{
+    float:left;
+    margin-bottom: .0em;
+  }
+}

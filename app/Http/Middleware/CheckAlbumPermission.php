@@ -22,9 +22,9 @@ class CheckAlbumPermission
 			'user_id' => Auth::id(),
 		])->exists();
 
-		if ( ! Auth::check() || ! $album_exists && !is_admin() && $request->user->id != Auth::id() ) {
-			abort(401, 'Brak dostępu');
-		}
+//		if ( ! Auth::check() || ! $album_exists && !is_admin() && $request->user->id != Auth::id() ) {
+//			abort(401, 'Brak dostępu');
+//		}
 
 		return $next($request);
 	}

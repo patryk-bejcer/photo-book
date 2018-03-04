@@ -45,6 +45,8 @@ class AlbumsController extends Controller
 		    'name' => 'required|max:55|min:3|max:25',
 		    'primary_image' => 'required',
 		    'description' => 'required|min:5|max:255',
+		    'images.*' => 'mimes:jpeg,bmp,png,gif|max:1500',
+		    'primary_image' => 'mimes:jpeg,bmp,png,gif|max:1500'
 //		    'images'  => 'required'
 	    ],[
 		    'required' => 'To pole jest wymagane',

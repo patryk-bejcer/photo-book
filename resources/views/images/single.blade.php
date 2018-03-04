@@ -35,8 +35,12 @@
                     @endif
 
                     @if ($image->comments)
+
                         Komentarze
                         <hr class="mt-1 mb-2">
+                        @if(count($image->comments) < 1)
+                            Aktualnie brak komentarzy
+                        @endif
                         @include('images.includes.comments')
                     @endif
         </div>
@@ -48,7 +52,7 @@
     @elseif($image->permission == 1)
         <p><small>* Autor wyraża zgodę na rozpowszechnianie</small></p>
     @endif
-        <p class="pull-right" style="margin-top:-2.5em"><small>Liczba wyświetleń: {{$image->views}}</small></p>
+        <p class="pull-right image-views" ><small>Liczba wyświetleń: {{$image->views}}</small></p>
     </div>
 
 @endsection

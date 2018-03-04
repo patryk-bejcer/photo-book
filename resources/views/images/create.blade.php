@@ -15,11 +15,11 @@
             <div class="col-sm-10 col-sm-offset-1">
                 <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
                     <label for="">Wybierz zdjęcia które chcesz dodać (.jpg) </label>
-                    <input name="images[]" type="file" class="form-control upload-input" placeholder="Wybierz zdjęcia" accept=".jpg,.jpeg" multiple>
+                    <input name="images[]" type="file" class="form-control upload-input" placeholder="Wybierz zdjęcia" accept=".jpg,.jpeg" data-max-size="2048" multiple>
 
-                    @if ($errors->has('primaryImage'))
+                    @if ($errors->has('images.*'))
                         <span class="help-block">
-                                                <strong>{{ $errors->first('primaryImage') }}</strong>
+                                                <strong>{{ $errors->first('images.*') }}</strong>
                                             </span>
                     @endif
 

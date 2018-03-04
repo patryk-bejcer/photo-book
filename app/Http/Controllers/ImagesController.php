@@ -28,6 +28,13 @@ class ImagesController extends Controller
     public function store(Request $request, $id)
     {
 
+	    // Validate images from form
+	    $request->validate([
+		    'images.*' => 'mimes:jpeg,bmp,png,gif|max:1500'
+	    ],[
+		    'max' => 'Maksymalny rozmiar zdjęcia to :max kb. Jedno z wybranych przez ciebie zdjęć przekracza ten rozmiar.'
+	    ]);
+
     	//Set images variable
     	$images = $request->images;
 

@@ -72,9 +72,9 @@
                     <input name="images[]" type="file" class="form-control upload-input mb-1"
                            placeholder="Wybierz zdjęcia" accept=".jpg,.jpeg" multiple>
 
-                    @if ($errors->has('images'))
+                    @if ($errors->has('images.*'))
                         <span class="help-block">
-                            <small class="text-danger">{{ $errors->first('images[]') }}</small>
+                            <small class="text-danger">{{ $errors->first('images.*') }}</small>
                         </span>
                     @endif
 
@@ -89,7 +89,7 @@
                 <div>
                     <a style="margin-left: -1px;" class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
                        aria-expanded="false" aria-controls="collapseExample">
-                        Kliknij aby wykorzystać już wcześniej dodane zdjęcia
+                        Użyj dodanych już zdjęć
                     </a>
                 </div>
 
@@ -99,12 +99,12 @@
 
                             @foreach(Auth::user()->images as $image)
 
-                                <div class="col-md-2 no-padding" style="padding:2px;">
+                                <div class="col-4 col-md-2 no-padding select-exist-images" style="padding:2px;">
 
                                     <label class="image-checkbox">
                                         <img class="img-responsive"
                                              src="{{url('storage/users') . '/' . $image->user_id . '/images/' . 'thumb-' . $image->path }}"/>
-                                        <input type="checkbox" name="check_image[]" value="{{$image->id}}"/>
+                                        <input class="check-exist-img" type="checkbox" name="check_image[]" value="{{$image->id}}"/>
                                     </label>
 
                                 </div>

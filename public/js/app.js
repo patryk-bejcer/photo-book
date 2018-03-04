@@ -50084,7 +50084,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -50113,7 +50112,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 permission: '',
                 comment: '',
                 rating: '',
-                access_users: {}
+                access_users: []
             },
             imageFullPath: '',
             user_id: window.Laravel.user_id,
@@ -50460,36 +50459,36 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: user.access_users,
-                              expression: "user.access_users"
+                              value: _vm.image.access_users,
+                              expression: "image.access_users"
                             }
                           ],
-                          staticStyle: { "margin-right": "6px" },
                           attrs: { type: "checkbox" },
                           domProps: {
-                            checked: Array.isArray(user.access_users)
-                              ? _vm._i(user.access_users, null) > -1
-                              : user.access_users
+                            value: user.id,
+                            checked: Array.isArray(_vm.image.access_users)
+                              ? _vm._i(_vm.image.access_users, user.id) > -1
+                              : _vm.image.access_users
                           },
                           on: {
                             change: function($event) {
-                              var $$a = user.access_users,
+                              var $$a = _vm.image.access_users,
                                 $$el = $event.target,
                                 $$c = $$el.checked ? true : false
                               if (Array.isArray($$a)) {
-                                var $$v = null,
+                                var $$v = user.id,
                                   $$i = _vm._i($$a, $$v)
                                 if ($$el.checked) {
                                   $$i < 0 &&
-                                    (user.access_users = $$a.concat([$$v]))
+                                    (_vm.image.access_users = $$a.concat([$$v]))
                                 } else {
                                   $$i > -1 &&
-                                    (user.access_users = $$a
+                                    (_vm.image.access_users = $$a
                                       .slice(0, $$i)
                                       .concat($$a.slice($$i + 1)))
                                 }
                               } else {
-                                _vm.$set(user, "access_users", $$c)
+                                _vm.$set(_vm.image, "access_users", $$c)
                               }
                             }
                           }
